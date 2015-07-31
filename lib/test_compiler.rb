@@ -15,6 +15,9 @@ class TestCompiler < Mumukit::Stub
   def compile(request)
 <<EOF
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+import java.time.*;
 import org.junit.*;
 
 #{request.content}

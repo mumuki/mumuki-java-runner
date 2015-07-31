@@ -14,6 +14,9 @@ EOT
 
   compiled_test_submission = <<EOT
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+import java.time.*;
 import org.junit.*;
 
 class A {}
