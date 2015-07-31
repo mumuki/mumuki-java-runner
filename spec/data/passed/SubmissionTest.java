@@ -14,6 +14,6 @@ public class SubmissionTest {
   }
 
   public static void main(String args[]) {
-    org.junit.runner.JUnitCore.main("mumukit.SubmissionTest");
+    org.junit.runner.JUnitCore.main("SubmissionTest");
   }
 }

@@ -10,10 +10,12 @@ class TestRunner < Mumukit::Stub
   end
 
   def run_test_dir!(dir)
-    compilation_out = run_command "#{javac_command} #{dir}/mumukit/SubmissionTest.java"
+    command = "#{javac_command} -cp #{java_classpath} #{dir}/SubmissionTest.java"
+    puts command
+    compilation_out = run_command command
     return compilation_out if compilation_out[1] != :passed
 
-    run_command "cd #{dir} && #{java_command} SubmissionTest"
+    run_command "cd #{dir} && #{java_command} -cp #{java_classpath}:. SubmissionTest"
   end
 
   def javac_command
@@ -22,5 +24,9 @@ class TestRunner < Mumukit::Stub
 
   def java_command
     config['java_command']
+  end
+
+  def java_classpath
+    config['java_classpath']
   end
 end
