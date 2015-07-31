@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 describe TestRunner do
   let(:runner) { TestRunner.new('javac_command' => 'javac',
                                 'java_command' => 'java',
-                                'java_classpath' => '$HOME/.m2/repository/org/hamcrest/hamcrest-core/1.2/hamcrest-core-1.2.jar:$HOME/.m2/repository/junit/junit/4.12/junit-4.12.jar') }
+                                'java_classpath' => '.heroku/vendor/hamcrest-core-1.2.jar:.heroku/vendor/junit-4.12.jar') }
 
   describe '#run' do
     let(:dir) { 'spec/data/failed' }

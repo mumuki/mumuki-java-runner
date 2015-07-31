@@ -1,2 +1,3 @@
 javac_command: javac
 java_command: java
+java_classpath: '.heroku/vendor/hamcrest-core-1.2.jar:.heroku/vendor/junit-4.12.jar'
