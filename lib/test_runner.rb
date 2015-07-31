@@ -10,12 +10,10 @@ class TestRunner < Mumukit::Stub
   end
 
   def run_test_dir!(dir)
-    command = "#{javac_command} -cp #{java_classpath} #{dir}/SubmissionTest.java"
-    puts command
-    compilation_out = run_command command
+    compilation_out = run_command "#{javac_command} -cp \"#{java_classpath}\" #{dir}/SubmissionTest.java 2>&1"
     return compilation_out if compilation_out[1] != :passed
 
-    run_command "cd #{dir} && #{java_command} -cp #{java_classpath}:. SubmissionTest"
+    run_command "cd #{dir} && #{java_command} -cp \"#{java_classpath}:.\" SubmissionTest"
   end
 
   def javac_command
