@@ -5,7 +5,7 @@ class TestCompiler < Mumukit::Stub
   def create_compilation!(request)
     dir = Dir.mktmpdir
 
-    file = File.new(File.join(dir, 'SubmissionTest.java'))
+    file = File.new(File.join(dir, 'SubmissionTest.java'), 'w')
     file.write(compile(request))
     file.close
 
