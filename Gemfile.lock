@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/mumuki/mumukit.git
-  revision: 851aede8dfccdfecca479628df8b9c856a696f5a
-  tag: v0.7.0
+  revision: 500aa88e657973f3413162ae903d7123fbc2c0e3
+  branch: master
   specs:
     mumukit (0.7.0)
       activesupport

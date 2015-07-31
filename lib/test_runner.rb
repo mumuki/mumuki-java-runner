@@ -15,16 +15,4 @@ class TestRunner < Mumukit::Stub
 
     run_command "#{java_command} -cp \"#{java_classpath}:#{dir}\" SubmissionTest"
   end
-
-  def javac_command
-    config['javac_command']
-  end
-
-  def java_command
-    config['java_command']
-  end
-
-  def java_classpath
-    config['java_classpath']
-  end
 end
