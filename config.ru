@@ -1,3 +1,5 @@
+#\ -s puma
+
 require 'i18n'
 require 'mumukit'
 
