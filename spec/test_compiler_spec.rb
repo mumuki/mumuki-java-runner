@@ -13,6 +13,9 @@ public void testTrue() {
 EOT
 
   compiled_test_submission = <<EOT
+import java.util.*;
+import org.junit.*;
+
 class A {}
 
 class B {}
@@ -22,18 +25,26 @@ public class SubmissionTest {
 public void testTrue() {
   Assert.assertEquals(1, 1);
 }
+
+
+public static void main(String args[]) {
+  org.junit.runner.JUnitCore.main("SubmissionTest");
+}
 }
 EOT
 
   describe '#compile' do
     let(:compiler) { TestCompiler.new(nil) }
-    it { expect(compiler.compile(req(true_test, 'class A {}',  'class B {}'))).to eq(compiled_test_submission) }
+    it { expect(compiler.compile(req(true_test, 'class B {}',  'class A {}'))).to eq(compiled_test_submission) }
   end
 
   describe '#create_compilation_file!' do
     let(:compiler) { TestCompiler.new(nil) }
-    let(:file) { compiler.create_compilation!(req('@Test public void testFoo() { }', '', 'class A {}')) }
+    let(:dir) { compiler.create_compilation!(req('@Test public void testFoo() { }', '', 'class A {}')) }
 
-    it { expect(File.exists? file.path).to be true }
+    it { expect(File.exists? dir).to be true }
+    it { expect(File.exists? "#{dir}/SubmissionTest.java").to be true }
+
+    after { FileUtils.rm_rf(dir) }
   end
 end

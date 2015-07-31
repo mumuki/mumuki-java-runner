@@ -1,1 +1,2 @@
-javac_command: javac
+javac_command: javac -cp  ~/.m2/repository/junit/junit/4.12/junit-4.12.jar
+java_command: java -cp  ~/.m2/repository/junit/junit/4.12/junit-4.12.jar

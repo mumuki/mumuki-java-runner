@@ -1,6 +1,6 @@
 require 'mumukit/bridge'
 
-describe 'runner' do
+describe 'Server' do
   let(:bridge) { Mumukit::Bridge::Bridge.new('http://localhost:4567') }
 
   before(:all) do

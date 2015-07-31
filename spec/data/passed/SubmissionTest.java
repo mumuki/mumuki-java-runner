@@ -12,4 +12,8 @@ public class SubmissionTest {
   public void testGetAnInt() {
     Assert.assertEquals(3, new Foo().getAnInt());
   }
+
+  public static void main(String args[]) {
+    org.junit.runner.JUnitCore.main("mumukit.SubmissionTest");
+  }
 }
