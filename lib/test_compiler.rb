@@ -1,5 +1,4 @@
 require 'tempfile'
-require 'mumukit'
 
 class TestCompiler < Mumukit::Stub
   def create_compilation!(request)
