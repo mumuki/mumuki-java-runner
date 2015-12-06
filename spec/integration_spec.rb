@@ -43,5 +43,4 @@ class Foo {
   end
 
 
-
 end

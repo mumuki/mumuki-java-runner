@@ -40,14 +40,4 @@ EOT
     let(:compiler) { TestCompiler.new(nil) }
     it { expect(compiler.compile(req(true_test, 'class B {}',  'class A {}'))).to eq(compiled_test_submission) }
   end
-
-  describe '#create_compilation_file!' do
-    let(:compiler) { TestCompiler.new(nil) }
-    let(:dir) { compiler.create_compilation!(req('@Test public void testFoo() { }', '', 'class A {}')) }
-
-    it { expect(File.exists? dir).to be true }
-    it { expect(File.exists? "#{dir}/SubmissionTest.java").to be true }
-
-    after { FileUtils.rm_rf(dir) }
-  end
 end

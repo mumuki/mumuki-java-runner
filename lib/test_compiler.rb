@@ -1,17 +1,6 @@
 require 'tempfile'
-require 'mumukit'
 
-class TestCompiler < Mumukit::Stub
-  def create_compilation!(request)
-    dir = Dir.mktmpdir
-
-    file = File.new(File.join(dir, 'SubmissionTest.java'), 'w')
-    file.write(compile(request))
-    file.close
-
-    dir
-  end
-
+class TestCompiler < Mumukit::FileTestCompiler
   def compile(request)
 <<EOF
 import java.util.*;

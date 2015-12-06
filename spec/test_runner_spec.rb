@@ -1,23 +1,32 @@
 require_relative 'spec_helper'
 
 describe TestRunner do
-  let(:runner) { TestRunner.new('javac_command' => 'javac',
-                                'java_command' => 'java',
-                                'java_classpath' => '.heroku/vendor/hamcrest-core-1.2.jar:.heroku/vendor/junit-4.12.jar') }
+  let(:runner) { TestRunner.new('runjunit_command' => 'runjunit') }
 
   describe '#run' do
-    let(:dir) { 'spec/data/failed' }
-    let(:result) { runner.run_test_dir!(dir) }
+    context 'when test does not compile' do
+      let(:file) { File.new 'spec/data/errored/SubmissionTest.java' }
+      let(:result) { runner.run_compilation!(file) }
 
-    it { expect(result[1]).to eq :failed }
-    it { expect(result[0]).to include 'There was 1 failure' }
+      it { expect(result[1]).to eq :errored }
+      it { expect(result[0]).to include 'error: reached end of file while parsing' }
 
-  end
+    end
 
-  describe '#run' do
-    let(:dir) { 'spec/data/passed' }
-    let(:result) { runner.run_test_dir!(dir) }
+    context 'when test fails' do
+      let(:file) { File.new 'spec/data/failed/SubmissionTest.java' }
+      let(:result) { runner.run_compilation!(file) }
 
-    it { expect(result[1]).to eq :passed }
+      it { expect(result[1]).to eq :failed }
+      it { expect(result[0]).to include 'There was 1 failure' }
+
+    end
+
+    context 'when test passes' do
+      let(:file) { File.new 'spec/data/passed/SubmissionTest.java' }
+      let(:result) { runner.run_compilation!(file) }
+
+      it { expect(result[1]).to eq :passed }
+    end
   end
 end

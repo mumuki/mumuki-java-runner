@@ -11,26 +11,31 @@ git clone https://github.com/mumuki/mumuki-junit-server
 cd mumuki-junit-server
 ```
 
-## Install JRuby
+## Install Ruby
 
-This project currently uses jruby instead of plain ruby. So install it first if you don't have it: 
-
-```
-rbenv install jruby-9.0.1.0
+```bash
+rbenv install 2.0.0-p481
 rbenv rehash
 gem install bundler
 ```
 
+## Install docker image
+
+This runner is dockerized, so you will need to install Docker first. Then: 
+
+```bash
+docker pull mumuki/mumuki-junit-worker
+```
+
 ## Install Dependencies
 
-```
+```bash
 bundle install
 ```
 
 # Run the server
 
-
-```
+```bash
 RACK_ENV=development bundle exec rackup -p 4567
 ```
 
