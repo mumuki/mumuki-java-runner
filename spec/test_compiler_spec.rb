@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe TestCompiler do
+describe 'compilation' do
   def req(test, extra, content)
     OpenStruct.new(test:test, extra:extra, content: content)
   end
@@ -37,7 +37,7 @@ public static void main(String args[]) {
 EOT
 
   describe '#compile' do
-    let(:compiler) { TestCompiler.new(nil) }
-    it { expect(compiler.compile(req(true_test, 'class B {}',  'class A {}'))).to eq(compiled_test_submission) }
+    let(:compiler) { TestHook.new(nil) }
+    it { expect(compiler.compile_file_content(req(true_test, 'class B {}',  'class A {}'))).to eq(compiled_test_submission) }
   end
 end
