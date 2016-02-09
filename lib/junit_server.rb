@@ -2,7 +2,9 @@ require 'mumukit'
 
 Mumukit.configure do |config|
   config.docker_image = 'mumuki/mumuki-junit-worker'
+  config.runner_name = 'junit-server'
+
 end
 
-require_relative './test_compiler'
-require_relative './test_runner'
+require_relative './test_hook'
+require_relative './metadata_hook'

@@ -7,8 +7,8 @@ services:
 - docker
 before_install:
 - openssl aes-256-cbc -K $encrypted_cab912f01fee_key -iv $encrypted_cab912f01fee_iv
-  -in deploy_rsa.enc -out deploy_rsa -d
+  -in escualo_rsa.enc -out escualo_rsa -d
 - docker pull mumuki/mumuki-junit-worker
 after_success:
 - wget https://raw.githubusercontent.com/mumuki/mumuki-escualo/master/travis_deploy
-  && chmod u+x travis_deploy && ./travis_deploy junit 162.243.111.176
+  && chmod u+x travis_deploy && ./travis_deploy junit runners.mumuki.io

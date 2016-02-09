@@ -1,12 +1,12 @@
 require_relative 'spec_helper'
 
-describe TestRunner do
-  let(:runner) { TestRunner.new('runjunit_command' => 'runjunit') }
+describe 'running' do
+  let(:runner) { TestHook.new('runjunit_command' => 'runjunit') }
 
   describe '#run' do
     context 'when test does not compile' do
       let(:file) { File.new 'spec/data/errored/SubmissionTest.java' }
-      let(:result) { runner.run_compilation!(file) }
+      let(:result) { runner.run!(file) }
 
       it { expect(result[1]).to eq :errored }
       it { expect(result[0]).to include 'error: reached end of file while parsing' }
@@ -15,7 +15,7 @@ describe TestRunner do
 
     context 'when test fails' do
       let(:file) { File.new 'spec/data/failed/SubmissionTest.java' }
-      let(:result) { runner.run_compilation!(file) }
+      let(:result) { runner.run!(file) }
 
       it { expect(result[1]).to eq :failed }
       it { expect(result[0]).to include 'There was 1 failure' }
@@ -24,7 +24,7 @@ describe TestRunner do
 
     context 'when test passes' do
       let(:file) { File.new 'spec/data/passed/SubmissionTest.java' }
-      let(:result) { runner.run_compilation!(file) }
+      let(:result) { runner.run!(file) }
 
       it { expect(result[1]).to eq :passed }
     end

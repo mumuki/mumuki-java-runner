@@ -5,4 +5,4 @@ I18n.load_path += Dir[File.join('.', 'locales', '*.yml')]
 
 require_relative 'lib/junit_server'
 
-run Mumukit::TestServerApp
+run Mumukit::Server::App
