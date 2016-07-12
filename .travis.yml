@@ -2,17 +2,10 @@ language: ruby
 env:
   matrix:
   - RACK_ENV=development
-  global:
-    secure: AEJjplJ2cgj/ogX5gj9R0etxCgFCvYocRoHzGMCdDU3rFvXB0guUPupK5kXllG2GQZaTGoy8uAhxRRGgX8xZBw6SZ1l9ZJoLgXYBlKO9nZq433btGWZVHAHRKqE5mjVLFlOrIBNkV8tAv7Cp0P402/h+VBxbMUe2/Qtw2iUoR9oH8tHJ325gOkcJl4gAXiypr2rQXnSBbRDIDIL/r6pqCcNSOWBj8ssV1NSK6T5/kMsvms8OzIfsmr279ULD7qEH3m4fyFHKLoPKCujZL+srajx0nfMalfOY5XGbtyQWSELlfiVXKXK9vPMfA1K9OkwR2f9rzOVMdXK1UuYLtsyj9exxUMoisB334HQh1vXrkPRJcn1AjzVjKkZx2oIPU1SJVqDviRacQ5GRc8oQ2YJEbwuUjLequNkm62UHt+E39iGLaHrPGG76Lr94C/2JN3PKxubDLtWZ6Hh7iYaX5ajpml+/0H5U4OqrkkmvLxQL1g8YbjO9SDyvPMIOvPBlpyw3ALOrY7t5LSMoK2TrNJ4Yff0SvZfiAb/oaWMk0XfZq4fH+MEdwYZ9o/mUrlYhF7BOkAa68qrm4I0Ukfikb9IJZfCKmfIegSN0/lfdDdgkJhtBlQznrK2MIWuPjPZmEDRtrij7AxXJu9xOXxz1OgUj1Jd8cRQcqE/MtbTjTr/DAGM=
 sudo: false
 rvm:
 - 2.0.0
 services:
 - docker
 before_install:
-- openssl aes-256-cbc -K $encrypted_cab912f01fee_key -iv $encrypted_cab912f01fee_iv
-  -in escualo_rsa.enc -out escualo_rsa -d
 - docker pull mumuki/mumuki-junit-worker
-after_success:
-- wget https://raw.githubusercontent.com/mumuki/mumuki-escualo-deploy/master/travis_deploy && chmod u+x travis_deploy
-- ./travis_deploy junit

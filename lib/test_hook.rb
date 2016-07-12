@@ -1,4 +1,4 @@
-class TestHook < Mumukit::Templates::FileHook
+class JavaTestHook < Mumukit::Templates::FileHook
   isolated true
 
   def tempfile_extension
@@ -6,7 +6,7 @@ class TestHook < Mumukit::Templates::FileHook
   end
 
   def command_line(filename)
-    "#{runjunit_command} #{filename}"
+    "runjunit #{filename}"
   end
 
   def post_process_file(file, result, status)
