@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 describe 'running' do
-  let(:runner) { TestHook.new('runjunit_command' => 'runjunit') }
+  let(:runner) { JavaTestHook.new }
 
   describe '#run' do
     context 'when test does not compile' do

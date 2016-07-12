@@ -37,7 +37,7 @@ public static void main(String args[]) {
 EOT
 
   describe '#compile' do
-    let(:compiler) { TestHook.new(nil) }
+    let(:compiler) { JavaTestHook.new(nil) }
     it { expect(compiler.compile_file_content(req(true_test, 'class B {}',  'class A {}'))).to eq(compiled_test_submission) }
   end
 end

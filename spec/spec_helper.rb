@@ -1,4 +1,4 @@
-require_relative '../lib/junit_server'
+require_relative '../lib/java_server'
 require 'rspec'
 
 class File
