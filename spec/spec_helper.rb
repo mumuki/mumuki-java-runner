@@ -1,3 +1,3 @@
-require_relative '../lib/java_server'
+require_relative '../lib/java_runner'
 require 'rspec'
 
