@@ -1,7 +1,5 @@
 language: ruby
-env:
-  matrix:
-  - RACK_ENV=development
+env: RACK_ENV=development
 sudo: false
 rvm:
 - 2.3.1
