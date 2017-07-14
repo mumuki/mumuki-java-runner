@@ -27,15 +27,18 @@ public class SubmissionTest {
    }
 }
 class MuListener extends RunListener {
-
   @Override
   public void testRunFinished(Result result) {
     String status = result.wasSuccessful() ? "success" : "failed";
-    Map<String, String> map = new HashMap<String, String>();
-    map.put("failures", String.valueOf(result.getFailureCount()));
-    map.put("status", status);
-    map.put("detailed", String.valueOf(result.getFailures()));
-    System.out.println(map.toString());
+    Map<String, String> results = new HashMap<String, String>();
+    Map<String, String> tests = new HashMap<String, String>();
+    tests.put("failures", String.valueOf(result.getFailureCount()));
+    tests.put("status", status);
+    tests.put("detailed", String.valueOf(result.getFailures()));
+    results.put("tests", String.valueOf(tests));
+    System.out.println(results.toString());
   }
 }
+
+
 
