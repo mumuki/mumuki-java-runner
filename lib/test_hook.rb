@@ -11,7 +11,12 @@ class JavaTestHook < Mumukit::Templates::FileHook
   end
 
   def to_structured_result(result)
-    puts "\n\n\nRESULTADOSTR: #{result}\n\n\n"
+    result.gsub!(/'/, "\"")
+    transform(JSON.parse(result))
+  end
+
+  def transform(examples)
+    examples.map { |e| [e[0], e[1].to_sym, e[2]] }
   end
 
   def post_process_file(file, result, status)
@@ -27,6 +32,7 @@ class JavaTestHook < Mumukit::Templates::FileHook
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
+import java.util.stream.Collectors.*;
 import java.time.*;
 import org.junit.runner.RunWith;
 import org.junit.*;
@@ -47,16 +53,33 @@ public class SubmissionTest {
   }
 }
 class MuListener extends RunListener {
+  private Map<String, Collection<String>> tests = new HashMap<>();
   @Override
-  public void testRunFinished(Result result) {
-    String status = result.wasSuccessful() ? "success" : "failed";
-    Map<String, String> results = new HashMap<String, String>();
-    Map<String, String> tests = new HashMap<String, String>();
-    tests.put("failures", String.valueOf(result.getFailureCount()));
-    tests.put("status", status);
-    tests.put("detailed", String.valueOf(result.getFailures()));
-    results.put("tests", String.valueOf(tests));
-    System.out.println(results.toString());
+  public void testStarted(Description description) throws Exception {
+    String methodName = description.getMethodName();
+    tests.put(methodName, Arrays.asList(methodName, "passed"));
+  }
+
+  @Override
+  public void testFailure(Failure failure) {
+    String methodName = failure.getDescription().getMethodName();
+    tests.put(methodName, Arrays.asList(methodName, "failed", failure.getMessage()));
+  }
+
+  @Override
+  public void testRunFinished(Result r) {
+    String result = prettyFormatResults(tests.values());
+    System.out.println(result);
+  }
+
+  public String prettyFormatString(String string) {
+    return "'" + string + "'";
+  }
+  public String prettyFormatExample(Collection<String> example) {
+    return "["+example.stream().map(element -> prettyFormatString(element)).collect(Collectors.joining(",")) +"]";
+  }
+  public String prettyFormatResults(Collection<Collection<String>> results) {
+    return "["+results.stream().map(element -> prettyFormatExample(element)).collect(Collectors.joining(","))+"]";
   }
 }
 EOF

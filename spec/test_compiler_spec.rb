@@ -7,32 +7,68 @@ describe 'compilation' do
 
   true_test = <<EOT
 @Test
-public void testTrue() {
-  Assert.assertEquals(1, 1);
-}
+  public void testTrue() {
+    Assert.assertEquals(1, 1);
+  }
 EOT
 
   compiled_test_submission = <<EOT
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
+import java.util.stream.Collectors.*;
 import java.time.*;
+import org.junit.runner.RunWith;
 import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runner.notification.*;
+import org.junit.runners.*;
+import org.junit.runners.model.InitializationError;
 
 class A {}
-
 class B {}
 
 public class SubmissionTest {
-@Test
-public void testTrue() {
-  Assert.assertEquals(1, 1);
-}
+  @Test
+  public void testTrue() {
+    Assert.assertEquals(1, 1);
+  }
 
-
-public static void main(String args[]) {
-  org.junit.runner.JUnitCore.main("SubmissionTest");
+  public static void main(String[] args) {
+    JUnitCore core = new JUnitCore();
+    core.addListener(new MuListener());
+    core.run(SubmissionTest.class);
+  }
 }
+class MuListener extends RunListener {
+  private Map<String, Collection<String>> tests = new HashMap<>();
+  @Override
+  public void testStarted(Description description) throws Exception {
+    String methodName = description.getMethodName();
+    tests.put(methodName, Arrays.asList(methodName, "passed"));
+  }
+
+  @Override
+  public void testFailure(Failure failure) {
+    String methodName = failure.getDescription().getMethodName();
+    tests.put(methodName, Arrays.asList(methodName, "failed", failure.getMessage()));
+  }
+
+  @Override
+  public void testRunFinished(Result r) {
+    String result = prettyFormatResults(tests.values());
+    System.out.println(result);
+  }
+
+  public String prettyFormatString(String string) {
+    return "'" + string + "'";
+  }
+  public String prettyFormatExample(Collection<String> example) {
+    return "["+example.stream().map(element -> prettyFormatString(element)).collect(Collectors.joining(",")) +"]";
+  }
+  public String prettyFormatResults(Collection<Collection<String>> results) {
+    return "["+results.stream().map(element -> prettyFormatExample(element)).collect(Collectors.joining(","))+"]";
+  }
 }
 EOT
 

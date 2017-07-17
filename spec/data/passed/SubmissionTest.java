@@ -26,18 +26,40 @@ public class SubmissionTest {
      runner.run(SubmissionTest.class);;
    }
 }
-
 class MuListener extends RunListener {
+  private Map<String, Collection<String>> tests = new HashMap<String, Collection<String>>();
   @Override
-  public void testRunFinished(Result result) {
-    String status = result.wasSuccessful() ? "success" : "failed";
-    Map<String, String> results = new HashMap<String, String>();
-    Map<String, String> tests = new HashMap<String, String>();
-    tests.put("failures", String.valueOf(result.getFailureCount()));
-    tests.put("status", status);
-    tests.put("detailed", String.valueOf(result.getFailures()));
-    results.put("tests", String.valueOf(tests));
-    System.out.println(results.toString());
+  public void testStarted(Description description) throws Exception {
+    String methodName = description.getMethodName();
+    tests.put(methodName, Arrays.asList(methodName, "passed"));
+  }
+
+  @Override
+  public void testFailure(Failure failure) {
+    String methodName = failure.getDescription().getMethodName();
+    tests.put(methodName, Arrays.asList(methodName, "failed", failure.getMessage()));
+  }
+
+  @Override
+  public void testRunFinished(Result r) {
+    String result = prettyFormatResults(tests.values());
+    System.out.println(result);
+  }
+
+  public String prettyFormat(Collection<String> list) {
+    StringJoiner joiner = new StringJoiner(",");
+    String result = "[";
+    for(String string : list) {
+      joiner.add(prettyFormat(string));
+    }
+    result += joiner.toString();
+    result += "]";
+    return result;
+  }
+  public String prettyFormat(String string) {
+    return "\"" + string + "\"";
+  }
+  public String prettyFormatResults(Collection<Collection<String>> list) {
+    return "[" + prettyFormat(list.iterator().next()) + "]";
   }
 }
-
