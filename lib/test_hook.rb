@@ -11,7 +11,6 @@ class JavaTestHook < Mumukit::Templates::FileHook
   end
 
   def to_structured_result(result)
-    result.gsub!(/'/, "\"")
     transform(JSON.parse(result))
   end
 
@@ -40,7 +39,7 @@ import org.junit.runner.*;
 import org.junit.runner.notification.*;
 import org.junit.runners.*;
 import org.junit.runners.model.InitializationError;
-
+import org.apache.commons.text.StringEscapeUtils;
 #{request.content}
 #{request.extra}
 
@@ -69,11 +68,11 @@ class MuListener extends RunListener {
   @Override
   public void testRunFinished(Result r) {
     String result = prettyFormatResults(tests.values());
-    System.out.println(result);
+    System.out.println(StringEscapeUtils.unescapeJson(result));
   }
 
   public String prettyFormatString(String string) {
-    return "'" + string + "'";
+    return ("\\\""+string+"\\\"");
   }
   public String prettyFormatExample(Collection<String> example) {
     return "["+example.stream().map(element -> prettyFormatString(element)).collect(Collectors.joining(",")) +"]";

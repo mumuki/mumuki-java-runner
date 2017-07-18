@@ -1,5 +1,5 @@
 #!/bin/bash
-CLASSPATH=hamcrest-core-1.2.1.jar:junit-4.12.jar
+CLASSPATH=hamcrest-core-1.2.1.jar:junit-4.12.jar:commons-text-1.1.jar:commons-lang3-3.5.jar
 
 directory=$(mktemp -d)
 cp $1 $directory/SubmissionTest.java
