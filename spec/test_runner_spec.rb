@@ -31,7 +31,7 @@ JAVA
       it { expect(results).to include 'error: reached end of file while parsing' }
     end
 
-    context 'when test fails' do
+    context 'when test fails with int' do
       let(:content) do
         <<JAVA
 class Foo {
@@ -41,8 +41,80 @@ class Foo {
 }
 JAVA
       end
-      it { expect(results).to eq [['testGetAnInt', :failed, 'expected:<3> but was:<2>']] }
+          let(:test) do
+        <<JAVA
+  @Test
+  public void testGetAnInt() {
+    Assert.assertEquals(3, new Foo().getAnInt());
+  }
+JAVA
+      end
 
+      it { expect(results).to eq [['testGetAnInt', :failed, 'expected:<3> but was:<2>']]}
+
+    end
+    context 'when test fails with array' do
+      let(:content) do
+        <<JAVA
+class Baz {
+  public List<String> getAnArray() {
+    return Arrays.asList("foo");
+  }
+}
+JAVA
+      end
+          let(:test) do
+        <<JAVA
+  @Test
+  public void testGetAnArray() {
+    Assert.assertEquals(Arrays.asList("bar"), new Baz().getAnArray());
+  }
+JAVA
+      end
+
+      it { expect(results).to eq [['testGetAnArray', :failed, 'expected:<[bar]> but was:<[foo]>']]}
+    end
+    context 'when test fails with char' do
+      let(:content) do
+        <<JAVA
+class Baz {
+  public char getAChar() {
+    return 'a';
+  }
+}
+JAVA
+      end
+          let(:test) do
+        <<JAVA
+  @Test
+  public void testGetAChar() {
+    Assert.assertEquals('b', new Baz().getAChar());
+  }
+JAVA
+      end
+
+      it { expect(results).to eq [['testGetAChar', :failed, 'expected:<98> but was:<97>']]}
+    end
+    context 'when test fails with String' do
+      let(:content) do
+        <<JAVA
+class Baz {
+  public String getAString() {
+    return "foo";
+  }
+}
+JAVA
+      end
+          let(:test) do
+        <<JAVA
+  @Test
+  public void testGetAChar() {
+    Assert.assertEquals("bar", new Baz().getAString());
+  }
+JAVA
+      end
+
+      it { expect(results).to eq [['testGetAChar', :failed, 'expected:<[bar]> but was:<[foo]>']]}
     end
 
     context 'when test passes' do
