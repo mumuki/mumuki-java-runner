@@ -22,8 +22,12 @@ class Foo {
   }
 }}, expectations: [])
 
-    expect(response[:result]).to include('OK')
-    expect(response[:status]).to eq(:passed)
+    expect(response).to eq(response_type: :structured,
+                           test_results: [{title: 'testTestFoo', status: :passed, result: ''}],
+                           status: :passed,
+                           feedback: '',
+                           expectation_results: [],
+                           result: '')
   end
 
 
@@ -38,8 +42,12 @@ class Foo {
   }
 }}, expectations: [])
 
-    expect(response[:status]).to eq(:failed)
-    expect(response[:result]).to include('There was 1 failure')
+    expect(response[:result]).to eq(response_type: :structured,
+                           test_results: [{title: 'testTestFoo', status: :failed, result: ''}],
+                           status: :passed,
+                           feedback: '',
+                           expectation_results: [],
+                           result: '')
   end
 
 
