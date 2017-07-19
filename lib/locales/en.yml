@@ -1,3 +1,4 @@
 en:
   missing_semicolon: "Missing ';' near `%{near}`"
+  missing_bracker: "Missing ')' near `%{near}`"
   cannot_find_symbol: "Cannot find `%{symbol}` declaration in `%{location}`"

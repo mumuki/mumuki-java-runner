@@ -29,6 +29,11 @@ class JavaFeedbackHook < Mumukit::Hook
         {near: it[1]}
       end
     end
+    def explain_missing_bracket(_, result)
+      (/#{error} '\(' expected#{near_regex}/.match result).try do |it|
+        {near: it[1]}
+      end
+    end
     def explain_cannot_find_symbol(_, result)
       (/#{error} cannot find symbol#{near_regex}#{symbol_regex}#{location_regex}/.match result).try do |it|
         {near: it[1], symbol: it[2].strip, location: it[3].strip}
