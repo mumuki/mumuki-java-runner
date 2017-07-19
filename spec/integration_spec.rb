@@ -22,13 +22,18 @@ class Foo {
   }
 }}, expectations: [])
 
-    expect(response[:result]).to include('OK')
-    expect(response[:status]).to eq(:passed)
+    expect(response).to eq(response_type: :structured,
+                           test_results: [{title: 'testFoo', status: :passed, result: nil}],
+                           status: :passed,
+                           feedback: '',
+                           expectation_results: [],
+                           result: '')
   end
 
 
   it 'answers a valid hash when submission fails' do
     response = bridge.run_tests!(test: %q{
+@Test
 public void testFoo() {
   Assert.assertEquals(Foo.bar(), 2);
 }}, extra: '', content: %q{
@@ -38,8 +43,12 @@ class Foo {
   }
 }}, expectations: [])
 
-    expect(response[:status]).to eq(:failed)
-    expect(response[:result]).to include('There was 1 failure')
+    expect(response).to eq(response_type: :structured,
+                           test_results: [{title: 'testFoo', status: :failed, result: 'expected:<1> but was:<2>'}],
+                           status: :failed,
+                           feedback: '',
+                           expectation_results: [],
+                           result: '')
   end
 
 
