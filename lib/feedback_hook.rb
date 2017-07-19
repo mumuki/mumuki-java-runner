@@ -12,6 +12,14 @@ class JavaFeedbackHook < Mumukit::Hook
       '.*[\t \n]* *(.*)\n[ \t]+\^'
     end
 
+    def symbol_regex()
+      '.*[\t \n]*symbol:*(.*)'
+    end
+
+    def location_regex()
+      '.*[\t \n]*location:*(.*)'
+    end
+
     def error()
       '[eE]rror:'
     end
@@ -19,6 +27,11 @@ class JavaFeedbackHook < Mumukit::Hook
     def explain_missing_semicolon(_, result)
       (/#{error} ';' expected#{near_regex}/.match result).try do |it|
         {near: it[1]}
+      end
+    end
+    def explain_cannot_find_symbol(_, result)
+      (/#{error} cannot find symbol#{near_regex}#{symbol_regex}#{location_regex}/.match result).try do |it|
+        {near: it[1], symbol: it[2].strip, location: it[3].strip}
       end
     end
   end

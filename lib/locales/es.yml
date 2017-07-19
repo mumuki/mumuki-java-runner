@@ -1,2 +1,3 @@
 es:
   missing_semicolon: "Parece que falta un ';' cerca de `%{near}`"
+  cannot_find_symbol: "No se encontró la definición de `%{symbol}` en `%{location}`"
