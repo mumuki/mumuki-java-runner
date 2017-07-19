@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/mumuki/mumuki-junit-server.svg?branch=master)](https://travis-ci.org/mumuki/mumuki-junit-server)
-[![Code Climate](https://codeclimate.com/github/mumuki/mumuki-junit-server/badges/gpa.svg)](https://codeclimate.com/github/mumuki/mumuki-junit-server)
-[![Test Coverage](https://codeclimate.com/github/mumuki/mumuki-junit-server/badges/coverage.svg)](https://codeclimate.com/github/mumuki/mumuki-junit-server)
+[![Build Status](https://travis-ci.org/mumuki/mumuki-java-server.svg?branch=master)](https://travis-ci.org/mumuki/mumuki-java-server)
+[![Code Climate](https://codeclimate.com/github/mumuki/mumuki-java-server/badges/gpa.svg)](https://codeclimate.com/github/mumuki/mumuki-java-server)
+[![Test Coverage](https://codeclimate.com/github/mumuki/mumuki-java-server/badges/coverage.svg)](https://codeclimate.com/github/mumuki/mumuki-java-server)
 
 # Install the server
 
