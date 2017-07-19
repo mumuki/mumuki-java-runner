@@ -1,0 +1,2 @@
+en:
+  missing_semicolon: "Missing ';' near `%{near}`"

@@ -1,0 +1,2 @@
+es:
+  missing_semicolon: "Parece que falta un ';' cerca de `%{near}`"
