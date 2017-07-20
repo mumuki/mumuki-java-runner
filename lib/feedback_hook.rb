@@ -8,36 +8,47 @@ class JavaFeedbackHook < Mumukit::Hook
 
   class JavaExplainer < Mumukit::Explainer
 
-    def near_regex()
-      '.*[\t \n]* *(.*)\n[ \t]+\^'
-    end
-
-    def symbol_regex()
-      '.*[\t \n]*symbol:*(.*)'
-    end
-
-    def location_regex()
-      '.*[\t \n]*location:*(.*)'
-    end
-
-    def error()
-      '[eE]rror:'
-    end
-
     def explain_missing_semicolon(_, result)
-      (/#{error} ';' expected#{near_regex}/.match result).try do |it|
-        {near: it[1]}
-      end
+      missing_character result, ';'
     end
+
     def explain_missing_bracket(_, result)
-      (/#{error} '\(' expected#{near_regex}/.match result).try do |it|
-        {near: it[1]}
-      end
+      missing_character result, '\('
     end
+
     def explain_cannot_find_symbol(_, result)
       (/#{error} cannot find symbol#{near_regex}#{symbol_regex}#{location_regex}/.match result).try do |it|
         {near: it[1], symbol: it[2].strip, location: it[3].strip}
       end
     end
+
+    private
+
+    def start_regex(symbol=' ')
+      /.*[\t \n]*#{symbol}*(.*)/
+    end
+
+    def near_regex
+      /#{start_regex}\n[ \t]+\^/
+    end
+
+    def symbol_regex
+      start_regex 'symbol:'
+    end
+
+    def location_regex
+      start_regex 'location:'
+    end
+
+    def error
+      '[eE]rror:'
+    end
+
+    def missing_character(result, character)
+      (/#{error} '#{character}' expected#{near_regex}/.match result).try do |it|
+        {near: it[1]}
+      end
+    end
+
   end
 end
