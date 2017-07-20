@@ -1,4 +1,5 @@
 es:
   missing_semicolon: "Parece que falta un ';' cerca de `%{near}`"
-  missing_bracket: "Parece que falta un ')' cerca de `%{near}`"
+  missing_parenthesis: "Parece que falta un '(' cerca de `%{near}`"
+  missing_bracket: "Se esperaba una { cerca de `%{near}`. Fijate si tal vez, introdujiste un paréntesis de más o está mal escrita la declaración de clase o método."
   cannot_find_symbol: "No se encontró la definición de `%{symbol}` en `%{location}`"

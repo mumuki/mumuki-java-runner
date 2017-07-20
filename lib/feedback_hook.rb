@@ -12,8 +12,12 @@ class JavaFeedbackHook < Mumukit::Hook
       missing_character result, ';'
     end
 
-    def explain_missing_bracket(_, result)
+    def explain_missing_parenthesis(_, result)
       missing_character result, '\('
+    end
+
+    def explain_missing_bracket(_, result)
+      missing_character result, '\{'
     end
 
     def explain_cannot_find_symbol(_, result)

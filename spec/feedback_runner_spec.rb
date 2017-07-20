@@ -22,14 +22,24 @@ describe JavaFeedbackHook do
     it {expect(feedback).to include("* Parece que falta un ';' cerca de `Assert.assertEquals(2, 3)`")}
   end
 
-  context 'missing bracket' do
+  context 'missing parenthesis' do
     let(:request) {req('class Foo {};', %q{
       public void testFoo){
         Assert.assertEquals(2, 3);
       }
     })}
 
-    it {expect(feedback).to include("* Parece que falta un ')' cerca de `public void testFoo){`")}
+    it {expect(feedback).to include("* Parece que falta un '(' cerca de `public void testFoo){`")}
+  end
+
+  context 'missing bracket' do
+    let(:request) {req('class Foo() {};', %q{
+      public void testFoo()){
+        Assert.assertEquals(2, 3);
+      }
+    })}
+
+    it {expect(feedback).to include("* Se esperaba una { cerca de `class Foo() {};`. Fijate si tal vez, introdujiste un paréntesis de más o está mal escrita la declaración de clase o método.")}
   end
 
   context 'missing method declaration' do
