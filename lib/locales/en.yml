@@ -3,3 +3,4 @@ en:
   missing_parenthesis: "Missing '(' near `%{near}`"
   missing_bracket: "Missing { near `%{near}`. Maybe you misspelled a class or method declaration."
   cannot_find_symbol: "Cannot find `%{symbol}` declaration in `%{location}`"
+  missing_return_statement: "There is a method that must return something, but doesn't. Check your code again!"
