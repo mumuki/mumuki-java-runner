@@ -51,4 +51,18 @@ describe JavaFeedbackHook do
 
     it {expect(feedback).to include("* No se encontró la definición de `method getAnInt()` en `class Foo`")}
   end
+  context 'missing return statement' do
+    let(:request) {req(%q{
+    class Foo {
+      public int getAnInt() {
+        int foo = 1 + 2;
+      }
+    }}, %q{
+      public void testFoo(){
+        Assert.assertEquals(2, new Foo().getAnInt());
+      }
+    })}
+
+    it {expect(feedback).to include("Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!")}
+  end
 end
