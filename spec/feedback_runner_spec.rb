@@ -65,4 +65,24 @@ describe JavaFeedbackHook do
 
     it {expect(feedback).to include("Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!")}
   end
+  context 'missing return statement' do
+    let(:request) {req(%q{
+    class Foo {
+      public int getAnInt() {
+        return 2;
+      }
+    }
+    interface Bar {
+      public int getAnInt();
+    }
+    class Baz {
+      Bar bar = new Foo();
+    }}, %q{
+      public void testFoo(){
+        Assert.assertEquals(2, new Foo().getAnInt());
+      }
+    })}
+
+    it {expect(feedback).to include("* La clase `Foo` debería extender o implementar `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
+  end
 end

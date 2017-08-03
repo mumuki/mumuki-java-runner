@@ -32,6 +32,12 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_incompatible_types(_, result)
+      (/#{error} incompatible types: (.*) cannot be converted to (.*)#{near_regex}/.match result).try do |it|
+        {down: it[1], up: it[2], near: it[3]}
+      end
+    end
+
     private
 
     def start_regex(symbol=' ')
