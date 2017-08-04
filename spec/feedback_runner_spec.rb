@@ -83,6 +83,6 @@ describe JavaFeedbackHook do
       }
     })}
 
-    it {expect(feedback).to include("* La clase `Foo` debería extender o implementar `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
+    it {expect(feedback).to include("* La clase `Foo` debería ser un `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
   end
 end
