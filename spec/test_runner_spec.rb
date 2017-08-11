@@ -1,4 +1,7 @@
 require_relative 'spec_helper'
+def format(result)
+  Mumukit::ContentType::Markdown.code result
+end
 
 describe 'running' do
   let(:runner) { JavaTestHook.new }
@@ -50,7 +53,7 @@ JAVA
 JAVA
       end
 
-      it { expect(results).to eq [['testGetAnInt', :failed, 'expected:<3> but was:<2>']]}
+      it { expect(results).to eq [['testGetAnInt', :failed, format('expected:<3> but was:<2>')]]}
 
     end
     context 'when test fails with array' do
@@ -72,7 +75,7 @@ JAVA
 JAVA
       end
 
-      it { expect(results).to eq [['testGetAnArray', :failed, 'expected:<[bar]> but was:<[foo]>']]}
+      it { expect(results).to eq [['testGetAnArray', :failed, format('expected:<[bar]> but was:<[foo]>')]]}
     end
     context 'when test fails with char' do
       let(:content) do
@@ -93,7 +96,7 @@ JAVA
 JAVA
       end
 
-      it { expect(results).to eq [['testGetAChar', :failed, 'expected:<98> but was:<97>']]}
+      it { expect(results).to eq [['testGetAChar', :failed, format('expected:<98> but was:<97>')]]}
     end
     context 'when test fails with String' do
       let(:content) do
@@ -114,7 +117,7 @@ JAVA
 JAVA
       end
 
-      it { expect(results).to eq [['testGetAChar', :failed, 'expected:<[bar]> but was:<[foo]>']]}
+      it { expect(results).to eq [['testGetAChar', :failed, format('expected:<[bar]> but was:<[foo]>')]]}
     end
 
     context 'when test passes' do
@@ -146,7 +149,7 @@ class Foo {
 JAVA
       end
 
-      it { expect(results).to eq [['testGetAnInt', :passed, nil], ["testGetACharacter", :passed, nil], ['testGetAFoo', :failed, 'expected:<3> but was:<4>']] }
+      it { expect(results).to eq [['testGetAnInt', :passed, nil], ["testGetACharacter", :passed, nil], ['testGetAFoo', :failed, format('expected:<3> but was:<4>')]] }
     end
   end
 end

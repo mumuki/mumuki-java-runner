@@ -15,7 +15,7 @@ class JavaTestHook < Mumukit::Templates::FileHook
   end
 
   def transform(examples)
-    examples.map { |e| [e[0], e[1].to_sym, e[2]] }
+    examples.map { |e| [e[0], e[1].to_sym, e[2].try {|result| Mumukit::ContentType::Markdown.code result}] }
   end
 
   def post_process_file(file, result, status)
