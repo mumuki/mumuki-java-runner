@@ -1,6 +1,10 @@
 require 'active_support/all'
 require 'mumukit/bridge'
 
+def format(result)
+  Mumukit::ContentType::Markdown.code result
+end
+
 describe 'Server' do
   let(:bridge) { Mumukit::Bridge::Runner.new('http://localhost:4568') }
 
@@ -44,7 +48,7 @@ class Foo {
 }}, expectations: [])
 
     expect(response).to eq(response_type: :structured,
-                           test_results: [{title: 'testFoo', status: :failed, result: 'expected:<1> but was:<2>'}],
+                           test_results: [{title: 'testFoo', status: :failed, result: format('expected:<1> but was:<2>')}],
                            status: :failed,
                            feedback: '',
                            expectation_results: [],
