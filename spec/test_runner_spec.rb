@@ -151,5 +151,30 @@ JAVA
 
       it { expect(results).to eq [['testGetAnInt', :passed, nil], ["testGetACharacter", :passed, nil], ['testGetAFoo', :failed, format('expected:<3> but was:<4>')]] }
     end
+
+    context 'when content contains a logging operation' do
+          let(:test) do
+        <<JAVA
+  @Test
+  public void testGetAnInt() {
+    Assert.assertEquals(3, new Foo().getAnInt());
+  }
+
+JAVA
+      end
+
+      let(:content) do
+        <<JAVA
+class Foo {
+  public int getAnInt() {
+    System.out.println("An output.");
+    return 3;
+  }
+}
+JAVA
+      end
+
+      it { expect(results).to eq [['testGetAnInt', :passed, nil]] }
+    end
   end
 end
