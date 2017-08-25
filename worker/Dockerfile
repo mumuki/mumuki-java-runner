@@ -5,6 +5,8 @@ RUN wget http://central.maven.org/maven2/junit/junit/4.12/junit-4.12.jar
 RUN wget http://central.maven.org/maven2/org/apache/commons/commons-text/1.1/commons-text-1.1.jar
 RUN wget http://central.maven.org/maven2/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar
 
+COPY runtest /bin/runtest
+RUN chmod u+x /bin/runtest
 
-COPY runjunit /bin/runjunit
-RUN chmod u+x /bin/runjunit
+COPY runquery /bin/runquery
+RUN chmod u+x /bin/runquery

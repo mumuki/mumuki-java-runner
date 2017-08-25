@@ -1,13 +1,8 @@
-class JavaTestHook < Mumukit::Templates::FileHook
-  isolated true
+class JavaTestHook < JavaFileHook
   structured true
 
-  def tempfile_extension
-    '.java'
-  end
-
   def command_line(filename)
-    "runjunit #{filename}"
+    "runtest #{filename}"
   end
 
   def to_structured_result(result)
@@ -16,14 +11,6 @@ class JavaTestHook < Mumukit::Templates::FileHook
 
   def transform(examples)
     examples.map { |e| [e[0], e[1].to_sym, e[2].try {|result| Mumukit::ContentType::Markdown.code result}] }
-  end
-
-  def post_process_file(file, result, status)
-    if result.include? '!!TEST FINISHED WITH COMPILATION ERROR!!'
-      [result, :errored]
-    else
-      super
-    end
   end
 
   def compile_file_content(request)
