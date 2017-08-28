@@ -1,6 +1,6 @@
 class JavaTestHook < Mumukit::Templates::FileHook
   isolated true
-  structured true
+  structured true, separator: '!!!JAVA-MUMUKI-OUTPUT!!!'
 
   def tempfile_extension
     '.java'
@@ -45,6 +45,11 @@ import org.apache.commons.text.StringEscapeUtils;
 
 public class SubmissionTest {
   #{request.test}
+  @AfterClass
+  public static void afterAll(){
+      System.out.println("!!!JAVA-MUMUKI-OUTPUT!!!");
+  }
+
   public static void main(String[] args) {
     JUnitCore core = new JUnitCore();
     core.addListener(new MuListener());

@@ -34,6 +34,11 @@ public class SubmissionTest {
     Assert.assertEquals(1, 1);
   }
 
+  @AfterClass
+  public static void afterAll(){
+      System.out.println("!!!JAVA-MUMUKI-OUTPUT!!!");
+  }
+
   public static void main(String[] args) {
     JUnitCore core = new JUnitCore();
     core.addListener(new MuListener());
