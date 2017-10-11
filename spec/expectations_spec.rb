@@ -16,14 +16,14 @@ describe JavaExpectationsHook do
     let(:code) { 'class X {}' }
     let(:expectations) { [] }
 
-    it { expect(result).to eq [{expectation: {binding: 'X', inspection: 'HasTooShortBindings'}, result: false}] }
+    it { expect(result).to eq [{expectation: {binding: 'X', inspection: 'HasTooShortIdentifiers'}, result: false}] }
   end
 
   context 'expectations' do
     describe 'DeclaresClass' do
       let(:code) { 'class Pepita {}' }
-      let(:declares_foo) { {binding: '', inspection: 'DeclaresClass:Foo'} }
-      let(:declares_pepita) { {binding: '', inspection: 'DeclaresClass:Pepita'} }
+      let(:declares_foo) { {binding: '*', inspection: 'DeclaresClass:Foo'} }
+      let(:declares_pepita) { {binding: '*', inspection: 'DeclaresClass:Pepita'} }
       let(:expectations) { [declares_foo, declares_pepita] }
 
       it { expect(result).to eq [{expectation: declares_foo, result: false}, {expectation: declares_pepita, result: true}] }
@@ -31,8 +31,8 @@ describe JavaExpectationsHook do
 
     describe 'DeclaresMethod' do
       let(:code) { 'class Pepita { public void canta() {}}' }
-      let(:declares_methods) { {binding: '', inspection: 'DeclaresMethod'} }
-      let(:declares_canta) { {binding: '', inspection: 'DeclaresMethod:canta'} }
+      let(:declares_methods) { {binding: '*', inspection: 'DeclaresMethod'} }
+      let(:declares_canta) { {binding: '*', inspection: 'DeclaresMethod:canta'} }
       let(:pepita_declares_canta) { {binding: 'Pepita', inspection: 'DeclaresMethod:canta'} }
       let(:pepita_declares_vola) { {binding: 'Pepita', inspection: 'DeclaresMethod:vola'} }
       let(:expectations) { [declares_methods, declares_canta, pepita_declares_canta, pepita_declares_vola] }
@@ -46,7 +46,7 @@ describe JavaExpectationsHook do
 
     describe 'UsesLambda' do
       let(:code) { 'class Main { public static void main(String[] args) { Arrays.asList("foo").stream().map((string) -> string);}}' }
-      let(:uses_lambda) { {binding: '', inspection: 'UsesLambda'} }
+      let(:uses_lambda) { {binding: '*', inspection: 'UsesLambda'} }
       let(:expectations) { [uses_lambda] }
 
       it { expect(result).to eq [{expectation: uses_lambda, result: true}] }
@@ -59,7 +59,7 @@ describe JavaExpectationsHook do
       let(:foo_delegates) { {binding: 'Foo', inspection: 'Uses:*'} }
       let(:foo_m_delegates) { {binding: 'Intransitive:Foo.m', inspection: 'Uses:*'} }
       let(:bar_m_delegates) { {binding: 'Intransitive:Bar.m', inspection: 'Uses:*'} }
-      let(:expectations) { [foo_delegates, foo_m_delegates, bar_m_delegates, {binding: '', inspection: 'Except:HasTooShortBindings'}] }
+      let(:expectations) { [foo_delegates, foo_m_delegates, bar_m_delegates, {binding: '*', inspection: 'Except:HasTooShortIdentifiers'}] }
 
       it { expect(result).to eq [{expectation: foo_delegates, result: false},
                                  {expectation: foo_m_delegates, result: false},
@@ -68,8 +68,8 @@ describe JavaExpectationsHook do
 
     describe 'Assigns' do
       let(:code) { 'class Main { public static void main(String[] args) { Object pepita = new Object();}}' }
-      let(:assigns_foo) { {binding: '', inspection: 'Assigns:foo'} }
-      let(:assigns_pepita) { {binding: '', inspection: 'Assigns:pepita'} }
+      let(:assigns_foo) { {binding: '*', inspection: 'Assigns:foo'} }
+      let(:assigns_pepita) { {binding: '*', inspection: 'Assigns:pepita'} }
       let(:expectations) { [assigns_foo, assigns_pepita] }
 
       it { expect(result).to eq [{expectation: assigns_foo, result: false}, {expectation: assigns_pepita, result: true}] }
@@ -98,8 +98,8 @@ describe JavaExpectationsHook do
     describe 'Declares Enumeration' do
       let(:code) { '
         enum Bar { A,B,C }' }
-      let(:enumeration_bar) { {binding: '', inspection: 'DeclaresEnumaration:Bar'} }
-      let(:enumeration_foo) { {binding: '', inspection: 'DeclaresEnumeration:Foo'} }
+      let(:enumeration_bar) { {binding: '*', inspection: 'DeclaresEnumaration:Bar'} }
+      let(:enumeration_foo) { {binding: '*', inspection: 'DeclaresEnumeration:Foo'} }
       let(:expectations) { [enumeration_bar, enumeration_foo] }
 
       it { expect(result).to eq [{expectation: enumeration_bar, result: true}, {expectation: enumeration_foo, result: false}] }
