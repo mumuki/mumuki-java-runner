@@ -2,6 +2,7 @@ en:
   missing_semicolon: "Missing ';' near `%{near}`"
   missing_parenthesis: "Missing '(' near `%{near}`"
   missing_bracket: "Missing { near `%{near}`. Maybe you misspelled a class or method declaration."
+  missing_parameter_type: "Missing parameter type near `%{near}`"
   cannot_find_symbol: "Cannot find `%{symbol}` declaration in `%{location}`"
   missing_return_statement: "There is a method that must return something, but doesn't. Check your code again!"
   incompatible_types: "Class `%{down}` should be a `%{up}`. Probably an _extends_ or _implements_ is missing near `%{near}`."
