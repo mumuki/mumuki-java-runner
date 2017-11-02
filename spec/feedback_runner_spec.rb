@@ -85,4 +85,18 @@ describe JavaFeedbackHook do
 
     it {expect(feedback).to include("* La clase `Foo` debería ser un `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
   end
+  context 'missing parameter type' do
+    let(:request) {req(%q{
+    class Foo {
+      public int plusTwo(aNumber) {
+        return 2 + aNumber;
+      }
+    }}, %q{
+      public void testFoo(){
+        Assert.assertEquals(2, new Foo().plusTwo(3));
+      }
+    })}
+
+    it {expect(feedback).to include("* Parece que falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
+  end
 end

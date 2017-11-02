@@ -20,6 +20,12 @@ class JavaFeedbackHook < Mumukit::Hook
       missing_character result, '\{'
     end
 
+    def explain_missing_parameter_type(_, result)
+      (/#{error} <identifier> expected#{near_regex}/.match result).try do |it|
+        {near: it[1]}
+      end
+    end
+
     def explain_missing_return_statement(_, result)
       (/#{error} missing return statement#{near_regex}/.match result).try do |it|
         {near: it[1]}
