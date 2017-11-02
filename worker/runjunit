@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 CLASSPATH=hamcrest-core-1.2.1.jar:junit-4.12.jar:commons-text-1.1.jar:commons-lang3-3.5.jar
 
 directory=$(mktemp -d)
 cp $1 $directory/SubmissionTest.java
-javac -cp "$CLASSPATH" "$directory/SubmissionTest.java" 2>&1
+javac -g:none -Xlint:none -Xdoclint:none -nowarn -cp "$CLASSPATH" "$directory/SubmissionTest.java" 2>&1
 if [ $? -ne 0 ] ; then
   echo "!!TEST FINISHED WITH COMPILATION ERROR!!"
   exit 1
