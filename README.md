@@ -8,7 +8,7 @@
 ## Clone the project
 
 ```
-git clone https://github.com/mumuki/mumuki-junit-server 
+git clone https://github.com/mumuki/mumuki-junit-runner
 cd mumuki-junit-server
 ```
 
@@ -22,10 +22,10 @@ gem install bundler
 
 ## Install docker image
 
-This runner is dockerized, so you will need to install Docker first. Then: 
+This runner is dockerized, so you will need to install Docker first. Then:
 
 ```bash
-docker pull mumuki/mumuki-junit-worker
+docker pull mumuki/mumuki-junit-worker:2.0
 ```
 
 ## Install Dependencies
