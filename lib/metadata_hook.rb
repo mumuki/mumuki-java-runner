@@ -10,7 +10,13 @@ class JavaMetadataHook < Mumukit::Hook
      test_framework: {
          name: 'junit',
          version: '4.12',
-         test_extension: 'java'
+         test_extension: 'java',
+         template: <<java
+@Test
+public void testDescriptionExample() {
+  Assert.assertTrue(true);
+}
+java
      }}
   end
 end
