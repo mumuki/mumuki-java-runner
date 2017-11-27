@@ -130,7 +130,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include('Fijate si no te falta un ; o una { cerca de la línea')}
+      it {expect(feedback).to include('Fijate si no te falta un `;` o una `{` cerca de la línea')}
     end
 
     context 'missing parenthesis' do
@@ -142,7 +142,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include('Fijate si no te falta un ( o te sobra un ) cerca de la línea')}
+      it {expect(feedback).to include('Fijate si no te falta un `(` o te sobra un `)` cerca de la línea')}
     end
 
     context 'missing bracket' do
@@ -154,7 +154,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include('Fijate si no te falta un ( o te sobra un ) cerca de la línea')}
+      it {expect(feedback).to include('Fijate si no te falta un `(` o te sobra un `)` cerca de la línea')}
     end
 
     context 'missing parameter type' do
