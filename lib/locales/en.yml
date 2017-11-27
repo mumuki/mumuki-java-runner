@@ -6,3 +6,5 @@ en:
   cannot_find_symbol: "Cannot find `%{symbol}` declaration in `%{location}`"
   missing_return_statement: "There is a method that must return something, but doesn't. Check your code again!"
   incompatible_types: "Class `%{down}` should be a `%{up}`. Probably an _extends_ or _implements_ is missing near `%{near}`."
+  unexpected_close_curly: "You have a syntax error. Check if you're missing a ; or a { near line %{line}."
+  unexpected_close_paren: "You have a syntax error. Check if you're missing a ( or have an extra ) near line %{line}. Also make sure all parameters declare their types."

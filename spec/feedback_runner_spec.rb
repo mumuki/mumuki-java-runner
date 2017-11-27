@@ -103,7 +103,7 @@ describe JavaFeedbackHook do
   end
 
   describe 'when ExpectationsHook is run before FeedbackHook' do
-    def req(content)
+    def reqq(content)
       struct expectations: [], content: content
     end
 
@@ -111,9 +111,15 @@ describe JavaFeedbackHook do
       runner.run!(runner.compile(request))
     end
 
-    let(:request) { req(code) }
+    let(:request) { reqq(code) }
     let(:runner) { JavaExpectationsHook.new }
-    let(:test_results) { compile_and_run(request) }
+    let(:test_results) do
+      begin
+      compile_and_run(request)
+      rescue Mumukit::CompilationError => e
+      [e.to_s]
+      end
+    end
 
     context 'missing semicolon' do
       let(:code) {%q{
@@ -124,7 +130,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to eq("* Parece que falta un ';' cerca de `Assert.assertEquals(2, 3)`")}
+      it {expect(feedback).to include('Fijate si no te falta un ; o una { cerca de la línea')}
     end
 
     context 'missing parenthesis' do
@@ -136,7 +142,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include("* Parece que falta un '(' cerca de `public void testFoo){`")}
+      it {expect(feedback).to include('Fijate si no te falta un ( o te sobra un ) cerca de la línea')}
     end
 
     context 'missing bracket' do
@@ -148,46 +154,9 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include("* Se esperaba una { cerca de `class Foo() {};`. Fijate si tal vez, introdujiste un paréntesis de más o está mal escrita la declaración de clase o método.")}
+      it {expect(feedback).to include('Fijate si no te falta un ( o te sobra un ) cerca de la línea')}
     end
 
-    context 'missing method declaration' do
-      let(:code) {%q{
-        class Foo {
-          public void testFoo(){
-            Assert.assertEquals(2, new Foo().getAnInt());
-          }
-        }
-      }}
-
-      it {expect(feedback).to include("* No se encontró la definición de `method getAnInt()` en `class Foo`")}
-    end
-    context 'missing return statement' do
-      let(:code) {%q{
-      class Foo {
-        public int getAnInt() {
-          int foo = 1 + 2;
-        }
-      }}}
-
-      it {expect(feedback).to include("Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!")}
-    end
-    context 'missing return statement' do
-      let(:code) {%q{
-      class Foo {
-        public int getAnInt() {
-          return 2;
-        }
-      }
-      interface Bar {
-        public int getAnInt();
-      }
-      class Baz {
-        Bar bar = new Foo();
-      }}}
-
-      it {expect(feedback).to include("* La clase `Foo` debería ser un `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
-    end
     context 'missing parameter type' do
       let(:code) {%q{
       class Foo {
@@ -196,7 +165,7 @@ describe JavaFeedbackHook do
         }
       }}}
 
-      it {expect(feedback).to include("* Parece que falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
+      it {expect(feedback).to include('Asegurate también de que todos los parámetros declaren sus tipos')}
     end
   end
 
