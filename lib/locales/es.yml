@@ -6,5 +6,5 @@ es:
   cannot_find_symbol: "No se encontró la definición de `%{symbol}` en `%{location}`"
   missing_return_statement: "Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!"
   incompatible_types: "La clase `%{down}` debería ser un `%{up}`. Revisá si no te falta un _extends_ o _implements_ cerca de `%{near}`."
-  unexpected_close_curly: "Tenés un error de sintaxis. Fijate si no te falta un ; o una { cerca de la línea %{line}."
-  unexpected_close_paren: "Tenés un error de sintaxis. Fijate si no te falta un ( o te sobra un ) cerca de la línea %{line}. Asegurate también de que todos los parámetros declaren sus tipos."
+  unexpected_close_curly: "Tenés un error de sintaxis. Fijate si no te falta un `;` o una `{` cerca de la línea %{line}."
+  unexpected_close_paren: "Tenés un error de sintaxis. Fijate si no te falta un `(` o te sobra un `)` cerca de la línea %{line}. Asegurate también de que todos los parámetros declaren sus tipos."
