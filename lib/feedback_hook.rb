@@ -44,6 +44,12 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_unexpected_token(_, result)
+      (/(.*): unexpected (.*)/.match result).try do |it|
+        {line: it[0], token: it[1]}
+      end
+    end
+
     private
 
     def start_regex(symbol=' ')
