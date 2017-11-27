@@ -44,6 +44,18 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_unexpected_close_curly(_, result)
+      (/\(line (.*), .*\):\nunexpected CloseCurly/.match result).try do |it|
+        {line: it[1]}
+      end
+    end
+
+    def explain_unexpected_close_paren(_, result)
+      (/\(line (.*), .*\):\nunexpected CloseParen/.match result).try do |it|
+        {line: it[1]}
+      end
+    end
+
     private
 
     def start_regex(symbol=' ')
