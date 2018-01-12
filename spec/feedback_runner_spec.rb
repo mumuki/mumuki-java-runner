@@ -64,7 +64,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!")}
+      it {expect(feedback).to include("* Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!")}
     end
     context 'missing return statement' do
       let(:request) {req(%q{
@@ -130,7 +130,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include('Fijate si no te falta un `;` o una `{` cerca de la línea')}
+      it {expect(feedback).to include('* Tenés un error de sintaxis. Fijate si no te falta un `;` o una `{` cerca de la línea 5.')}
     end
 
     context 'missing parenthesis' do
@@ -142,7 +142,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include('Fijate si no te falta un `(` o te sobra un `)` cerca de la línea')}
+      it {expect(feedback).to include('* Tenés un error de sintaxis. Fijate si no te falta un `(` o te sobra un `)` cerca de la línea 3. Asegurate también de que todos los parámetros declaren sus tipos.')}
     end
 
     context 'missing bracket' do
@@ -154,7 +154,7 @@ describe JavaFeedbackHook do
         }
       }}
 
-      it {expect(feedback).to include('Fijate si no te falta un `(` o te sobra un `)` cerca de la línea')}
+      it {expect(feedback).to include('* Tenés un error de sintaxis. Fijate si no te falta un `(` o te sobra un `)` cerca de la línea 3. Asegurate también de que todos los parámetros declaren sus tipos.')}
     end
 
     context 'missing parameter type' do
@@ -165,7 +165,7 @@ describe JavaFeedbackHook do
         }
       }}}
 
-      it {expect(feedback).to include('Asegurate también de que todos los parámetros declaren sus tipos')}
+      it {expect(feedback).to include('* Tenés un error de sintaxis. Fijate si no te falta un `(` o te sobra un `)` cerca de la línea 3. Asegurate también de que todos los parámetros declaren sus tipos.')}
     end
   end
 

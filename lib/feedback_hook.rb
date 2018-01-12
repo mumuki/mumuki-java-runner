@@ -22,37 +22,54 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def explain_missing_parameter_type(_, result)
       (/#{error} <identifier> expected#{near_regex}/.match result).try do |it|
-        {near: it[1]}
+        [
+          {near: it[1]},
+          {type: :error, line: it[1]}
+        ]
       end
     end
 
     def explain_missing_return_statement(_, result)
       (/#{error} missing return statement#{near_regex}/.match result).try do |it|
-        {near: it[1]}
+        [
+          {near: it[1]},
+          {type: :error, line: it[1]}
+        ]
       end
     end
 
     def explain_cannot_find_symbol(_, result)
       (/#{error} cannot find symbol#{near_regex}#{symbol_regex}#{location_regex}/.match result).try do |it|
-        {near: it[1], symbol: it[2].strip, location: it[3].strip}
+        [
+          {near: it[1], symbol: it[2].strip, location: it[3].strip}
+        ]
       end
     end
 
     def explain_incompatible_types(_, result)
       (/#{error} incompatible types: (.*) cannot be converted to (.*)#{near_regex}/.match result).try do |it|
-        {down: it[1], up: it[2], near: it[3]}
+        [
+          {down: it[1], up: it[2], near: it[3]},
+          {type: :error, line: it[1], down: it[1], up: it[2]}
+        ]
       end
     end
 
     def explain_unexpected_close_curly(_, result)
       (/\(line (.*), .*\):\nunexpected CloseCurly/.match result).try do |it|
-        {line: it[1]}
+        [
+          {line: it[1]},
+          {type: :error, line: it[1], column: it[2]}
+        ]
       end
     end
 
     def explain_unexpected_close_paren(_, result)
       (/\(line (.*), .*\):\nunexpected CloseParen/.match result).try do |it|
-        {line: it[1]}
+        [
+          {line: it[1]},
+          {type: :error, line: it[1], column: it[2]}
+        ]
       end
     end
 
@@ -80,7 +97,10 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def missing_character(result, character)
       (/#{error} '#{character}' expected#{near_regex}/.match result).try do |it|
-        {near: it[1]}
+        [
+          {near: it[1]},
+          {type: :error, line: it[1]}
+        ]
       end
     end
 

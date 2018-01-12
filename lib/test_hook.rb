@@ -1,6 +1,7 @@
 class JavaTestHook < Mumukit::Templates::FileHook
   isolated true
   structured true, separator: '!!!JAVA-MUMUKI-OUTPUT!!!'
+  line_number_offset 12
 
   def tempfile_extension
     '.java'
@@ -24,6 +25,10 @@ class JavaTestHook < Mumukit::Templates::FileHook
     else
       super
     end
+  end
+
+  def masked_tempfile_path
+    'SubmissionTest.java'
   end
 
   def compile_file_content(request)
