@@ -22,7 +22,7 @@ describe 'running' do
 JAVA
       end
 
-    context 'when test does not compile' do
+    context 'when content does not compile' do
       let(:content) do
         <<JAVA
 class Foo {
@@ -33,6 +33,20 @@ JAVA
       end
       it { expect(results).to include 'error: reached end of file while parsing' }
     end
+
+    context 'when content does not compile because of references errors' do
+      let(:content) do
+        <<JAVA
+class Foo {
+  public NaranjoEnFlor getAnInt() {
+    return 3;
+  }
+}
+JAVA
+      end
+      it { expect(results).to include 'error: reached end of file while parsing' }
+    end
+
 
     context 'when test fails with int' do
       let(:content) do
