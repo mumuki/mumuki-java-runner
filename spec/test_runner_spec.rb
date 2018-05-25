@@ -44,7 +44,14 @@ class Foo {
 }
 JAVA
       end
-      it { expect(results).to include 'error: reached end of file while parsing' }
+      it { expect(results).to eq("```java\n" +
+                                 "/tmp/SubmissionTest.java:14: error: cannot find symbol\n" +
+                                 "  public NaranjoEnFlor getAnInt() {\n" +
+                                 "         ^\n"+
+                                 "  symbol:   class NaranjoEnFlor\n" +
+                                 "  location: class Foo\n" +
+                                 "1 error\n\n" +
+                                 "```") }
     end
 
 

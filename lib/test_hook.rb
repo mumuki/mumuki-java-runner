@@ -1,4 +1,5 @@
 class JavaTestHook < Mumukit::Templates::FileHook
+  COMPILATION_ERROR_FLAG = '!!TEST FINISHED WITH COMPILATION ERROR!!'
   isolated true
   structured true, separator: '!!!JAVA-MUMUKI-OUTPUT!!!'
 
@@ -19,11 +20,15 @@ class JavaTestHook < Mumukit::Templates::FileHook
   end
 
   def post_process_file(file, result, status)
-    if result.include? '!!TEST FINISHED WITH COMPILATION ERROR!!'
-      [result, :errored]
+    if result.include? COMPILATION_ERROR_FLAG
+      [format_errored_result(result), :errored]
     else
       super
     end
+  end
+
+  def format_errored_result(result)
+    Mumukit::ContentType::Markdown.highlighted_code :java, result.gsub(COMPILATION_ERROR_FLAG, '').gsub(/\/tmp\/tmp.*\/SubmissionTest/, "/tmp/SubmissionTest")
   end
 
   def compile_file_content(request)
