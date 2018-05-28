@@ -22,7 +22,7 @@ describe 'running' do
 JAVA
       end
 
-    context 'when test does not compile' do
+    context 'when content does not compile' do
       let(:content) do
         <<JAVA
 class Foo {
@@ -33,6 +33,27 @@ JAVA
       end
       it { expect(results).to include 'error: reached end of file while parsing' }
     end
+
+    context 'when content does not compile because of references errors' do
+      let(:content) do
+        <<JAVA
+class Foo {
+  public NaranjoEnFlor getAnInt() {
+    return 3;
+  }
+}
+JAVA
+      end
+      it { expect(results).to eq("```java\n" +
+                                 "/tmp/SubmissionTest.java:14: error: cannot find symbol\n" +
+                                 "  public NaranjoEnFlor getAnInt() {\n" +
+                                 "         ^\n"+
+                                 "  symbol:   class NaranjoEnFlor\n" +
+                                 "  location: class Foo\n" +
+                                 "1 error\n\n" +
+                                 "```") }
+    end
+
 
     context 'when test fails with int' do
       let(:content) do
