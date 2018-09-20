@@ -74,11 +74,28 @@ describe JavaFeedbackHook do
     }}, %q{
       public void testFoo(){
         Golondrina golondrina = new Golondrina();
-        Assert.assertEquals(2, golondrina.reanimarConUnChocolate());
+        golondrina.reanimarConUnChocolate();
       }
     })}
 
       it {expect(feedback).to include("* No se encontró la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
+    end
+
+    context 'private method should be public' do
+      let(:request) {req(%q{
+    interface Reclamo {
+      public void agregarEn(LinkedList reclamos);
+    }
+    class ReclamoComun implements Reclamo {
+      private void agregarEn(LinkedList reclamos) {
+      }
+    }}, %q{
+      public void testFoo(){
+        new ReclamoComun().agregarEn(new LinkedList());
+      }
+    })}
+
+      it {expect(feedback).to include("* El método `agregarEn(LinkedList)` en `ReclamoComun` debería ser público. Revisá si tiene la visibilidad correcta cerca de `private void agregarEn(LinkedList reclamos) {`.")}
     end
 
     context 'missing return statement' do

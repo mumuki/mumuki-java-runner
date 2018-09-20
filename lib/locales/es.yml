@@ -1,6 +1,7 @@
 es:
   at_location: "en %{location}"
   cannot_find_symbol: "No se encontró la definición de %{symbol}%{at_location}"
+  implemented_method_should_be_public: "El método `%{method}` en `%{class}` debería ser público. Revisá si tiene la visibilidad correcta cerca de `%{near}`."
   incompatible_types: "La clase `%{down}` debería ser un `%{up}`. Revisá si no te falta un _extends_ o _implements_ cerca de `%{near}`."
   missing_semicolon: "Parece que falta un ';' cerca de `%{near}`"
   missing_parenthesis: "Parece que falta un '(' cerca de `%{near}`"

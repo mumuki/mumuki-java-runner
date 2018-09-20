@@ -59,6 +59,12 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_implemented_method_should_be_public(_, result)
+     (/#{error} #{symbol_name} in #{symbol_name} cannot implement #{symbol_name} in #{symbol_name}#{near_regex}\n  attempting to assign weaker access privileges/.match result).try do |it|
+       {method: it[1], class: it[2], near: it[5]}
+     end
+    end
+
     private
 
     def start_regex(symbol=' ')
@@ -75,6 +81,10 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def location_regex
       start_regex 'location:'
+    end
+
+    def symbol_name
+      "([\\w\\(\\)]+)"
     end
 
     def error
@@ -111,7 +121,9 @@ class JavaFeedbackHook < Mumukit::Hook
     end
 
     def parse_symbol(result)
-      parts = /^(\w+) ([\w\(\)]+)( of type (\w+))?/.match result
+      parts = /^(\w+) #{symbol_name}( of type (\w+))?/.match result
+      return ['', '', ''] if parts.nil?
+
       [parts[1], parts[2], parts[4]]
     end
   end

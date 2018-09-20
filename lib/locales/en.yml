@@ -1,6 +1,7 @@
 en:
   at_location: "at %{location}"
-  cannot_find_symbol: "Cannot find `%{symbol}` declaration in `%{location}`"
+  cannot_find_symbol: "Cannot find `%{symbol}` declaration%{at_location}"
+  implemented_method_should_be_public: "Method `%{method}` in `%{class}` should be public. Check if it has the right visibility near `%{near}`."
   incompatible_types: "Class `%{down}` should be a `%{up}`. Probably an _extends_ or _implements_ is missing near `%{near}`."
   missing_semicolon: "Missing ';' near `%{near}`"
   missing_parenthesis: "Missing '(' near `%{near}`"
