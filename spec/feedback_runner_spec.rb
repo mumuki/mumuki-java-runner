@@ -68,6 +68,19 @@ describe JavaFeedbackHook do
       it {expect(feedback).to include("Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!")}
     end
 
+    context 'missing method with type' do
+      let(:request) {req(%q{
+    class Golondrina {
+    }}, %q{
+      public void testFoo(){
+        Golondrina golondrina = new Golondrina();
+        Assert.assertEquals(2, golondrina.reanimarConUnChocolate());
+      }
+    })}
+
+      it {expect(feedback).to include("* No se encontró la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
+    end
+
     context 'missing return statement' do
       let(:request) {req(%q{
     class Foo {

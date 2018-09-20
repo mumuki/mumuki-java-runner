@@ -97,14 +97,22 @@ class JavaFeedbackHook < Mumukit::Hook
     end
 
     def localize_symbol(symbol)
-      type, name = parse_symbol symbol
+      symbol_type, name, type = parse_symbol symbol
+      i18n_key = "symbol_#{symbol_type}"
+      return "`#{symbol}`" unless I18n.exists? i18n_key
 
-      I18n.t "symbol_#{type}", { name: name, default: "`#{type} #{name}`" }
+      I18n.t(i18n_key, { name: name }) + localize_of_type(type)
+    end
+
+    def localize_of_type(type)
+      return '' if type.nil?
+
+      ' ' + I18n.t(:of_type, type: type)
     end
 
     def parse_symbol(result)
-      parts = /^(\w+) (.+)$/.match result
-      [parts[1], parts[2]]
+      parts = /^(\w+) ([\w\(\)]+)( of type (\w+))?/.match result
+      [parts[1], parts[2], parts[4]]
     end
   end
 end
