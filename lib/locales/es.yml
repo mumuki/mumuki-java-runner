@@ -14,6 +14,6 @@ es:
   of_type: "de tipo `%{type}`"
   symbol_class: "la clase `%{name}`"
   symbol_variable: "la variable `%{name}`"
-  symbol_method: "el método `%{name}`"
+  symbol_method: "método `%{name}`"
   unexpected_close_curly: "Tenés un error de sintaxis. Fijate si no te falta un `;` o una `{` cerca de la línea %{line}."
   unexpected_close_paren: "Tenés un error de sintaxis. Fijate si no te falta un `(` o te sobra un `)` cerca de la línea %{line}. Asegurate también de que todos los parámetros declaren sus tipos."

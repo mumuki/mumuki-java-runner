@@ -50,7 +50,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de el método `getAnInt()` en la clase `Foo`")}
+      it {expect(feedback).to include("* No se encontró la definición de método `getAnInt()` en la clase `Foo`")}
     end
 
     context 'missing return statement' do
@@ -78,7 +78,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de el método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
+      it {expect(feedback).to include("* No se encontró la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
     end
 
     context 'missing class' do
