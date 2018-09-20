@@ -14,3 +14,4 @@ en:
   of_type: "of type `%{type}`"
   unexpected_close_curly: "You have a syntax error. Check if you're missing a `;` or a `{` near line %{line}."
   unexpected_close_paren: "You have a syntax error. Check if you're missing a `(` or have an extra `)` near line %{line}. Also make sure all parameters declare their types."
+  wrong_constructor_arguments: "Constructor of class `%{class}` doesn't exist or it expects another amount or type of arguments"

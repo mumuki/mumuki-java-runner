@@ -178,6 +178,19 @@ describe JavaFeedbackHook do
 
       it {expect(feedback).to include("* Estás intentando convertir un `double` a un `int`, pero `double` es más específico y se podrían perder datos. Si estás seguro de querer hacerlo, agregá un `(int)` a la izquierda de la expresión, cerca de `int a = 2.0;`.")}
     end
+
+    context 'wrong constructor' do
+      let(:request) {req(%q{
+    class Foo {
+      Foo() { }
+    }}, %q{
+      public void testFoo() {
+        new Foo(1, 2);
+      }
+    })}
+
+      it {expect(feedback).to include("* El constructor de la clase `Foo` no existe o espera otra cantidad o tipo de argumentos")}
+    end
   end
 
   describe 'when ExpectationsHook is run before FeedbackHook' do

@@ -62,6 +62,12 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_wrong_constructor_arguments(_, result)
+      (/#{error} constructor (.*) in class (.*) cannot be applied to given types;#{near_regex}/.match result).try do |it|
+        { class: it[2] }
+      end
+    end
+
     def explain_unexpected_close_curly(_, result)
       (/\(line (.*), .*\):\nunexpected CloseCurly/.match result).try do |it|
         {line: it[1]}

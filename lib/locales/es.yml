@@ -18,3 +18,4 @@ es:
   symbol_method: "método `%{name}`"
   unexpected_close_curly: "Tenés un error de sintaxis. Fijate si no te falta un `;` o una `{` cerca de la línea %{line}."
   unexpected_close_paren: "Tenés un error de sintaxis. Fijate si no te falta un `(` o te sobra un `)` cerca de la línea %{line}. Asegurate también de que todos los parámetros declaren sus tipos."
+  wrong_constructor_arguments: "El constructor de la clase `%{class}` no existe o espera otra cantidad o tipo de argumentos"
