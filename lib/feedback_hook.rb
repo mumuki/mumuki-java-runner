@@ -3,7 +3,6 @@ class JavaFeedbackHook < Mumukit::Hook
     content = request.content
     test_results = results.test_results[0]
 
-    puts "MIRAMIRMIAMIRAMI", test_results
     JavaExplainer.new.explain(content, test_results) if test_results.is_a? String
   end
 
@@ -44,7 +43,16 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def explain_incompatible_types(_, result)
       (/#{error} incompatible types: (.*) cannot be converted to (.*)#{near_regex}/.match result).try do |it|
-        {down: it[1], up: it[2], near: it[3]}
+        actual = it[1]
+        expected = it[2]
+        near = it[3]
+
+        { message: I18n.t(
+                     primitive_types.include?(actual) || primitive_types.include?(expected) ?
+                       :incompatible_types_primitives :
+                       :incompatible_types_classes,
+                     { actual: actual, expected: expected, near: near }
+                   ) }
       end
     end
 
@@ -86,6 +94,10 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def symbol_name
       "([\\w\\(\\)]+)"
+    end
+
+    def primitive_types
+      ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char']
     end
 
     def error

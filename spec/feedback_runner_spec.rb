@@ -50,7 +50,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de método `getAnInt()` en la clase `Foo`")}
+      it {expect(feedback).to include("* No se encontró la definición de el método `getAnInt()` en la clase `Foo`")}
     end
 
     context 'missing return statement' do
@@ -78,28 +78,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
-    end
-
-    context 'missing return statement' do
-      let(:request) {req(%q{
-    class Foo {
-      public int getAnInt() {
-        return 2;
-      }
-    }
-    interface Bar {
-      public int getAnInt();
-    }
-    class Baz {
-      Bar bar = new Foo();
-    }}, %q{
-      public void testFoo(){
-        Assert.assertEquals(2, new Foo().getAnInt());
-      }
-    })}
-
-      it {expect(feedback).to include("* La clase `Foo` debería ser un `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
+      it {expect(feedback).to include("* No se encontró la definición de el método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
     end
 
     context 'missing class' do
@@ -135,6 +114,42 @@ describe JavaFeedbackHook do
     })}
 
       it {expect(feedback).to include("* Parece que falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
+    end
+
+    context 'wrong types - classes' do
+      let(:request) {req(%q{
+    class Foo {
+      public int getAnInt() {
+        return 2;
+      }
+    }
+    interface Bar {
+      public int getAnInt();
+    }
+    class Baz {
+      Bar bar = new Foo();
+    }}, %q{
+      public void testFoo(){
+        Assert.assertEquals(2, new Foo().getAnInt());
+      }
+    })}
+
+      it {expect(feedback).to include("* La clase `Foo` debería ser un `Bar`. Revisá si no te falta un _extends_ o _implements_ cerca de `Bar bar = new Foo();`.")}
+    end
+
+    context 'wrong types - primitives' do
+      let(:request) {req(%q{
+    class Foo {
+      boolean bar() {
+        return 3;
+      }
+    }}, %q{
+      public void testFoo(){
+        new Foo().bar();
+      }
+    })}
+
+      it {expect(feedback).to include("* Estás devolviendo un `int` donde se necesitaba un `boolean` cerca de `return 3;`")}
     end
 
     context 'private method should be public' do
