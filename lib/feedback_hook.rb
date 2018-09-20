@@ -35,12 +35,9 @@ class JavaFeedbackHook < Mumukit::Hook
     def explain_cannot_find_symbol(_, result)
       (/#{error} cannot find symbol#{near_regex}#{symbol_regex}#{location_regex}/.match result).try do |it|
         symbol = it[2].strip
-        symbol_type = symbol_type_of symbol
-        at_location = symbol_type == 'class' ?
-          '' :
-          " #{I18n.t(:at_location, { location: it[3].strip })}"
+        location = it[3].strip
 
-        {near: it[1], symbol: it[2].strip, at_location: at_location }
+        {near: it[1], symbol: localize_symbol(symbol), at_location: at_location(symbol, location) }
       end
     end
 
@@ -90,8 +87,24 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
-    def symbol_type_of(result)
-      /^\w+/.match(result)[0]
+    def at_location(symbol, location)
+      symbol_type, _ = parse_symbol symbol
+      return '' if symbol_type == 'class'
+
+      ' ' + I18n.t(:at_location, {
+        location: localize_symbol(location)
+      })
+    end
+
+    def localize_symbol(symbol)
+      type, name = parse_symbol symbol
+
+      I18n.t "symbol_#{type}", { name: name, default: "`#{type} #{name}`" }
+    end
+
+    def parse_symbol(result)
+      parts = /^(\w+) (.+)$/.match result
+      [parts[1], parts[2]]
     end
   end
 end

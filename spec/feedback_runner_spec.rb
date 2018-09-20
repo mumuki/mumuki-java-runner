@@ -50,7 +50,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de `method getAnInt()` en `class Foo`")}
+      it {expect(feedback).to include("* No se encontró la definición de método `getAnInt()` en la clase `Foo`")}
     end
 
     context 'missing return statement' do
@@ -91,12 +91,22 @@ describe JavaFeedbackHook do
 
     context 'missing class' do
       let(:request) {req('', %q{
-      public void testFoo(){
+      public void testFoo() {
         Assert.assertEquals(2, new Foo());
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de `class Foo`")}
+      it {expect(feedback).to eq("* No se encontró la definición de la clase `Foo`")}
+    end
+
+    context 'missing class' do
+      let(:request) {req('class Main {}', %q{
+      public void testFoo() {
+        Assert.assertEquals(2, Main.unaVariable);
+      }
+    })}
+
+      it {expect(feedback).to include("* No se encontró la definición de la variable `unaVariable` en la clase `Main`")}
     end
 
     context 'missing parameter type' do
