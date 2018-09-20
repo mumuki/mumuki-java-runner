@@ -168,6 +168,16 @@ describe JavaFeedbackHook do
 
       it {expect(feedback).to include("* El método `agregarEn(LinkedList)` en `ReclamoComun` debería ser público. Revisá si tiene la visibilidad correcta cerca de `private void agregarEn(LinkedList reclamos) {`.")}
     end
+
+    context 'possible lossy conversion' do
+      let(:request) {req('', %q{
+      public void testFoo() {
+        int a = 2.0;
+      }
+    })}
+
+      it {expect(feedback).to include("* Estás intentando convertir un `double` a un `int`, pero `double` es más específico y se podrían perder datos. Si estás seguro de querer hacerlo, agregá un `(int)` a la izquierda de la expresión, cerca de `int a = 2.0;`.")}
+    end
   end
 
   describe 'when ExpectationsHook is run before FeedbackHook' do

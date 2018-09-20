@@ -41,6 +41,12 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_lossy_conversion(_, result)
+      (/#{error} incompatible types: possible lossy conversion from (.*) to (.*)#{near_regex}/.match result).try do |it|
+        { from: it[1], to: it[2], near: it[3] }
+      end
+    end
+
     def explain_incompatible_types(_, result)
       (/#{error} incompatible types: (.*) cannot be converted to (.*)#{near_regex}/.match result).try do |it|
         actual = it[1]
