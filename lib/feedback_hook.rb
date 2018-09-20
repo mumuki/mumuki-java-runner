@@ -81,9 +81,15 @@ class JavaFeedbackHook < Mumukit::Hook
     end
 
     def explain_implemented_method_should_be_public(_, result)
-     (/#{error} #{symbol_name} in #{symbol_name} cannot implement #{symbol_name} in #{symbol_name}#{near_regex}\n  attempting to assign weaker access privileges/.match result).try do |it|
+     (/#{error} (.*) in (.*) cannot implement (.*) in (.*)#{near_regex}\n  attempting to assign weaker access privileges/.match result).try do |it|
        {method: it[1], class: it[2], near: it[5]}
      end
+    end
+
+    def explain_missing_implementation(_, result)
+      (/#{error} (.*) is not abstract and does not override abstract method (.*) in (.*)#{near_regex}/.match result).try do |it|
+        {down: it[1], method: it[2], up: it[3] }
+      end
     end
 
     private
@@ -102,10 +108,6 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def location_regex
       start_regex 'location:'
-    end
-
-    def symbol_name
-      "([\\w\\(\\)]+)"
     end
 
     def primitive_types
@@ -146,7 +148,7 @@ class JavaFeedbackHook < Mumukit::Hook
     end
 
     def parse_symbol(result)
-      parts = /^(\w+) #{symbol_name}( of type (\w+))?/.match result
+      parts = /^(\w+) ([\w\(\)]+)( of type (\w+))?/.match result
       return ['', '', ''] if parts.nil?
 
       [parts[1], parts[2], parts[4]]

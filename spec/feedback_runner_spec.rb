@@ -116,6 +116,22 @@ describe JavaFeedbackHook do
       it {expect(feedback).to include("* Parece que falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
     end
 
+    context 'missing implementation' do
+      let(:request) {req(%q{
+    interface Foo {
+      void someMethod(int a);
+    }
+
+    class Bar implements Foo {
+    }}, %q{
+      public void testFoo() {
+        new Bar();
+      }
+    })}
+
+      it {expect(feedback).to include("* Te está faltando implementar el método `someMethod(int)` en la clase `Bar`, ya que está definido en `Foo`")}
+    end
+
     context 'wrong types - classes' do
       let(:request) {req(%q{
     class Foo {
@@ -166,7 +182,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* El método `agregarEn(LinkedList)` en `ReclamoComun` debería ser público. Revisá si tiene la visibilidad correcta cerca de `private void agregarEn(LinkedList reclamos) {`.")}
+      it {expect(feedback).to include("* El método `agregarEn(LinkedList)` en la clase `ReclamoComun` debería ser público. Revisá si tiene la visibilidad correcta cerca de `private void agregarEn(LinkedList reclamos) {`.")}
     end
 
     context 'possible lossy conversion' do
