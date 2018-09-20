@@ -1,4 +1,5 @@
 en:
+  at_location: "at `%{location}`"
   missing_semicolon: "Missing ';' near `%{near}`"
   missing_parenthesis: "Missing '(' near `%{near}`"
   missing_bracket: "Missing { near `%{near}`. Maybe you misspelled a class or method declaration."
