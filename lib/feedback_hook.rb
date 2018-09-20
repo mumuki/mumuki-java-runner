@@ -3,6 +3,7 @@ class JavaFeedbackHook < Mumukit::Hook
     content = request.content
     test_results = results.test_results[0]
 
+    puts "MIRAMIRMIAMIRAMI", test_results
     JavaExplainer.new.explain(content, test_results) if test_results.is_a? String
   end
 

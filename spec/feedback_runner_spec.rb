@@ -81,23 +81,6 @@ describe JavaFeedbackHook do
       it {expect(feedback).to include("* No se encontró la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
     end
 
-    context 'private method should be public' do
-      let(:request) {req(%q{
-    interface Reclamo {
-      public void agregarEn(LinkedList reclamos);
-    }
-    class ReclamoComun implements Reclamo {
-      private void agregarEn(LinkedList reclamos) {
-      }
-    }}, %q{
-      public void testFoo(){
-        new ReclamoComun().agregarEn(new LinkedList());
-      }
-    })}
-
-      it {expect(feedback).to include("* El método `agregarEn(LinkedList)` en `ReclamoComun` debería ser público. Revisá si tiene la visibilidad correcta cerca de `private void agregarEn(LinkedList reclamos) {`.")}
-    end
-
     context 'missing return statement' do
       let(:request) {req(%q{
     class Foo {
@@ -129,7 +112,7 @@ describe JavaFeedbackHook do
       it {expect(feedback).to eq("* No se encontró la definición de la clase `Foo`")}
     end
 
-    context 'missing class' do
+    context 'missing variable' do
       let(:request) {req('class Main {}', %q{
       public void testFoo() {
         Assert.assertEquals(2, Main.unaVariable);
@@ -152,6 +135,23 @@ describe JavaFeedbackHook do
     })}
 
       it {expect(feedback).to include("* Parece que falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
+    end
+
+    context 'private method should be public' do
+      let(:request) {req(%q{
+    interface Reclamo {
+      public void agregarEn(LinkedList reclamos);
+    }
+    class ReclamoComun implements Reclamo {
+      private void agregarEn(LinkedList reclamos) {
+      }
+    }}, %q{
+      public void testFoo(){
+        new ReclamoComun().agregarEn(new LinkedList());
+      }
+    })}
+
+      it {expect(feedback).to include("* El método `agregarEn(LinkedList)` en `ReclamoComun` debería ser público. Revisá si tiene la visibilidad correcta cerca de `private void agregarEn(LinkedList reclamos) {`.")}
     end
   end
 
