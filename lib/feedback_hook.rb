@@ -92,6 +92,12 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def explain_missing_return_type(_, result)
+      (/#{error} invalid method declaration; return type required#{near_regex}/.match result).try do |it|
+        { near: it[1] }
+      end
+    end
+
     private
 
     def start_regex(symbol=' ')

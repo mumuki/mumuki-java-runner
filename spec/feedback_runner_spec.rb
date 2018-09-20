@@ -132,6 +132,19 @@ describe JavaFeedbackHook do
       it {expect(feedback).to include("* Te está faltando implementar el método `someMethod(int)` en la clase `Bar`, ya que está definido en `Foo`")}
     end
 
+    context 'missing return type' do
+      let(:request) {req(%q{
+    class Main {
+      static main(String[] args) { }
+    }}, %q{
+      public void testFoo() {
+
+      }
+    })}
+
+      it {expect(feedback).to include("* Te falta especificar el tipo de retorno cerca de `static main(String[] args) { }")}
+    end
+
     context 'wrong types - classes' do
       let(:request) {req(%q{
     class Foo {

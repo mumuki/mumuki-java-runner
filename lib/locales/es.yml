@@ -10,6 +10,7 @@ es:
   missing_parenthesis: "Parece que falta un '(' cerca de `%{near}`"
   missing_parameter_type: "Parece que falta el tipo de un parámetro cerca de `%{near}`"
   missing_return_statement: "Hay un método que debería retornar algo, pero no está retornando nada. ¡Revisá bien tu código!"
+  missing_return_type: "Te falta especificar el tipo de retorno cerca de `%{near}`"
   missing_semicolon: "Parece que falta un ';' cerca de `%{near}`"
   lossy_conversion: "Estás intentando convertir un `%{from}` a un `%{to}`, pero `%{from}` es más específico y se podrían perder datos. Si estás seguro de querer hacerlo, agregá un `(%{to})` a la izquierda de la expresión, cerca de `%{near}`."
   of_type: "de tipo `%{type}`"
