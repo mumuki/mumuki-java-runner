@@ -20,7 +20,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* Parece que falta un ';' cerca de `Assert.assertEquals(2, 3)`")}
+      it {expect(feedback).to include("* Parece que te falta un ';' cerca de `Assert.assertEquals(2, 3)`")}
     end
 
     context 'missing parenthesis' do
@@ -30,7 +30,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* Parece que falta un '(' cerca de `public void testFoo){`")}
+      it {expect(feedback).to include("* Parece que te falta un '(' cerca de `public void testFoo){`")}
     end
 
     context 'missing bracket' do
@@ -40,7 +40,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* Se esperaba una { cerca de `class Foo() {};`. Fijate si tal vez, introdujiste un paréntesis de más o está mal escrita la declaración de clase o método.")}
+      it {expect(feedback).to include("* Te falta una `{` cerca de `class Foo() {};`. Fijate si te sobran paréntesis o está mal escrita la declaración de clase o método.")}
     end
 
     context 'missing method declaration' do
@@ -50,7 +50,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de método `getAnInt()` en la clase `Foo`")}
+      it {expect(feedback).to include("* Te falta la definición de método `getAnInt()` en la clase `Foo`")}
     end
 
     context 'missing return statement' do
@@ -78,7 +78,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
+      it {expect(feedback).to include("* Te falta la definición de método `reanimarConUnChocolate()` en la variable `golondrina` de tipo `Golondrina`")}
     end
 
     context 'missing class' do
@@ -88,7 +88,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to eq("* No se encontró la definición de la clase `Foo`")}
+      it {expect(feedback).to eq("* Te falta la definición de la clase `Foo`")}
     end
 
     context 'missing variable' do
@@ -98,7 +98,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* No se encontró la definición de la variable `unaVariable` en la clase `Main`")}
+      it {expect(feedback).to include("* Te falta la definición de la variable `unaVariable` en la clase `Main`")}
     end
 
     context 'missing parameter type' do
@@ -113,7 +113,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* Parece que falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
+      it {expect(feedback).to include("* Parece que te falta el tipo de un parámetro cerca de `public int plusTwo(aNumber) {`")}
     end
 
     context 'missing implementation' do
@@ -205,7 +205,7 @@ describe JavaFeedbackHook do
       }
     })}
 
-      it {expect(feedback).to include("* Estás intentando convertir un `double` a un `int`, pero `double` es más específico y se podrían perder datos. Si estás seguro de querer hacerlo, agregá un `(int)` a la izquierda de la expresión, cerca de `int a = 2.0;`.")}
+      it {expect(feedback).to include("* Estás intentando convertir un `double` a un `int`, pero `double` es más específico y se podrían perder datos. Si realmente querés hacerlo, agregá un `(int)` a la izquierda de la expresión, cerca de `int a = 2.0;`.")}
     end
 
     context 'wrong constructor' do
