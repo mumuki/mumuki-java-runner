@@ -34,13 +34,32 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def explain_cannot_find_symbol(_, result)
       (/#{error} cannot find symbol#{near_regex}#{symbol_regex}#{location_regex}/.match result).try do |it|
-        {near: it[1], symbol: it[2].strip, location: it[3].strip}
+        symbol = it[2].strip
+        location = it[3].strip
+
+        {near: it[1], symbol: localize_symbol(symbol), at_location: at_location(symbol, location) }
+      end
+    end
+
+    def explain_lossy_conversion(_, result)
+      (/#{error} incompatible types: possible lossy conversion from (.*) to (.*)#{near_regex}/.match result).try do |it|
+        { from: it[1], to: it[2], near: it[3] }
       end
     end
 
     def explain_incompatible_types(_, result)
       (/#{error} incompatible types: (.*) cannot be converted to (.*)#{near_regex}/.match result).try do |it|
-        {down: it[1], up: it[2], near: it[3]}
+        actual = it[1]
+        expected = it[2]
+        near = it[3]
+
+        { message: I18n.t(type_incompatibilty_kind(actual, expected), actual: actual, expected: expected, near: near) }
+      end
+    end
+
+    def explain_wrong_constructor_arguments(_, result)
+      (/#{error} constructor (.*) in class (.*) cannot be applied to given types;#{near_regex}/.match result).try do |it|
+        { class: it[2] }
       end
     end
 
@@ -53,6 +72,24 @@ class JavaFeedbackHook < Mumukit::Hook
     def explain_unexpected_close_paren(_, result)
       (/\(line (.*), .*\):\nunexpected CloseParen/.match result).try do |it|
         {line: it[1]}
+      end
+    end
+
+    def explain_implemented_method_should_be_public(_, result)
+     (/#{error} (.*) in (.*) cannot implement (.*) in (.*)#{near_regex}\n  attempting to assign weaker access privileges/.match result).try do |it|
+       {method: it[1], class: it[2], near: it[5]}
+     end
+    end
+
+    def explain_missing_implementation(_, result)
+      (/#{error} (.*) is not abstract and does not override abstract method (.*) in (.*)#{near_regex}/.match result).try do |it|
+        {down: it[1], method: it[2], up: it[3] }
+      end
+    end
+
+    def explain_missing_return_type(_, result)
+      (/#{error} invalid method declaration; return type required#{near_regex}/.match result).try do |it|
+        { near: it[1] }
       end
     end
 
@@ -74,6 +111,14 @@ class JavaFeedbackHook < Mumukit::Hook
       start_regex 'location:'
     end
 
+    def type_incompatibilty_kind(a_type, another)
+      [a_type, another].any? { |it| primitive_types.include?(it) } ? :incompatible_types_primitives : :incompatible_types_classes
+    end
+
+    def primitive_types
+      ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char']
+    end
+
     def error
       '[eE]rror:'
     end
@@ -84,5 +129,34 @@ class JavaFeedbackHook < Mumukit::Hook
       end
     end
 
+    def at_location(symbol, location)
+      symbol_type, _ = parse_symbol symbol
+      return '' if symbol_type == 'class'
+
+      ' ' + I18n.t(:at_location, {
+        location: localize_symbol(location)
+      })
+    end
+
+    def localize_symbol(symbol)
+      symbol_type, name, type = parse_symbol symbol
+      i18n_key = "symbol_#{symbol_type}"
+      return "`#{symbol}`" unless I18n.exists? i18n_key
+
+      I18n.t(i18n_key, { name: name }) + localize_of_type(type)
+    end
+
+    def localize_of_type(type)
+      return '' if type.nil?
+
+      ' ' + I18n.t(:of_type, type: type)
+    end
+
+    def parse_symbol(result)
+      parts = /^(\w+) ([\w\(\)]+)( of type (\w+))?/.match result
+      return ['', '', ''] if parts.nil?
+
+      [parts[1], parts[2], parts[4]]
+    end
   end
 end
