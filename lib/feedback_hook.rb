@@ -53,12 +53,7 @@ class JavaFeedbackHook < Mumukit::Hook
         expected = it[2]
         near = it[3]
 
-        { message: I18n.t(
-                     primitive_types.include?(actual) || primitive_types.include?(expected) ?
-                       :incompatible_types_primitives :
-                       :incompatible_types_classes,
-                     { actual: actual, expected: expected, near: near }
-                   ) }
+        { message: I18n.t(type_incompatibilty_kind(actual, expected), actual: actual, expected: expected, near: near) }
       end
     end
 
@@ -114,6 +109,10 @@ class JavaFeedbackHook < Mumukit::Hook
 
     def location_regex
       start_regex 'location:'
+    end
+
+    def type_incompatibilty_kind(a_type, another)
+      [a_type, another].any? { |it| primitive_types.include?(it) } ? :incompatible_types_primitives : :incompatible_types_classes
     end
 
     def primitive_types
