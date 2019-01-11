@@ -1,4 +1,5 @@
 class JavaTestHook < Mumukit::Templates::FileHook
+  # // TODO: Use MultiFileHook
   COMPILATION_ERROR_FLAG = '!!TEST FINISHED WITH COMPILATION ERROR!!'
   isolated true
   structured true, separator: '!!!JAVA-MUMUKI-OUTPUT!!!'
@@ -32,7 +33,7 @@ class JavaTestHook < Mumukit::Templates::FileHook
   end
 
   def compile_file_content(request)
-    <<EOF
+    test = <<EOF
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -45,7 +46,7 @@ import org.junit.runner.notification.*;
 import org.junit.runners.*;
 import org.junit.runners.model.InitializationError;
 import org.apache.commons.text.StringEscapeUtils;
-#{request.content}
+#{single_file?(request) ? request.content : ''}
 #{request.extra}
 
 public class SubmissionTest {
@@ -92,6 +93,10 @@ class MuListener extends RunListener {
   }
 }
 EOF
+    JSON.generate(files_of(request).merge({ "SubmissionTest.java" => test }))
   end
 
+  def single_file?(request)
+    files_of(request).empty?
+  end
 end
