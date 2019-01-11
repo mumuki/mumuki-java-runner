@@ -6,6 +6,7 @@ Mumukit.runner_name = 'java'
 Mumukit.configure do |config|
   config.docker_image = 'mumuki/mumuki-junit-worker:2.0'
   config.content_type = 'markdown'
+  config.multifile = true
 end
 
 require_relative './version'
