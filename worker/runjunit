@@ -1,15 +1,20 @@
 #!/bin/sh
 CLASSPATH=hamcrest-core-1.2.1.jar:junit-4.12.jar:commons-text-1.1.jar:commons-lang3-3.5.jar
 
-# TODO: Fix tests
-# TODO: Add tests with multiple files
-
+files="$@"
 directory=$(mktemp -d)
-for file in "$@"
+for file in "$files"
 do
     cp $file $directory
 done
-javac -g:none -Xlint:none -Xdoclint:none -nowarn -cp "$CLASSPATH" $directory/*.java 2>&1
+
+files_count="$#"
+if [ "$files_count" -gt "1" ]; then
+  javac -g:none -Xlint:none -Xdoclint:none -nowarn -cp "$CLASSPATH" $directory/*.java 2>&1
+else
+  cp $1 $directory/SubmissionTest.java
+  javac -g:none -Xlint:none -Xdoclint:none -nowarn -cp "$CLASSPATH" "$directory/SubmissionTest.java" 2>&1
+fi
 if [ $? -ne 0 ] ; then
   echo "!!TEST FINISHED WITH COMPILATION ERROR!!"
   exit 1
