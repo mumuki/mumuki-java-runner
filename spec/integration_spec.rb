@@ -42,13 +42,13 @@ public void testFoo() {
 }}, extra: '', content: %q{
 class Foo {
   public static int bar() {
-    return 2;
+    return 1;
   }
 }}, expectations: [])
 
     expect(response).to eq(response_type: :structured,
-                           test_results: [{title: 'testFoo', status: :passed, result: nil}],
-                           status: :passed,
+                           test_results: [{title: 'testFoo', status: :failed, result: format('expected:<1> but was:<2>')}],
+                           status: :failed,
                            feedback: '',
                            expectation_results: [],
                            result: '')
