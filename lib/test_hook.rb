@@ -12,7 +12,8 @@ class JavaTestHook < Mumukit::Templates::MultiFileHook
   end
 
   def to_structured_result(result)
-    transform(JSON.parse(result))
+    clean_json = result.strip.gsub("\n", '\n')
+    transform(JSON.parse(clean_json))
   end
 
   def transform(examples)
