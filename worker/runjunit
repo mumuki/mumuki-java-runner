@@ -1,8 +1,7 @@
 #!/bin/sh
 CLASSPATH=hamcrest-core-1.2.1.jar:junit-4.12.jar:commons-text-1.1.jar:commons-lang3-3.5.jar
 
-# TODO: Delete temp dirs @ mumukit
-# TODO: Add expectations support
+# TODO: Fix tests
 # TODO: Add tests with multiple files
 
 directory=$(mktemp -d)
