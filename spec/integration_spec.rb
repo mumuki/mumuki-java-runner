@@ -142,7 +142,7 @@ public void email_admite_elaborar() {
         response = bridge.run_tests!(test: test, extra: '', content: content, expectations: expectations)
 
         expect(response).to eq(response_type: :structured,
-                               test_results: [{ title: 'email_admite_elaborar', status: :failed, result: "\n```\nexpected:<Para: Juan[o Gomez <juanogomez@gmail.com>\nHola juano]!!> but was:<Para: Juan[ Perez <juanperez@gmail.com>\nHola juan]!!>\n```\n\n"}],
+                               test_results: [{ title: 'email_admite_elaborar', status: :failed, result: format("expected:<Para: Juan[o Gomez <juanogomez@gmail.com>\nHola juano]!!> but was:<Para: Juan[ Perez <juanperez@gmail.com>\nHola juan]!!>")}],
                                status: :failed,
                                feedback: '',
                                expectation_results: [
