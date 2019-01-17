@@ -1,14 +1,16 @@
 #!/bin/sh
 CLASSPATH=hamcrest-core-1.2.1.jar:junit-4.12.jar:commons-text-1.1.jar:commons-lang3-3.5.jar
 
-# TODO: Modify this script to support multiple file parameters
-# TODO: Modify mumukit to support custom names inside docker containers
-# TODO: Test isolated mode @ mumukit
+# TODO: Delete temp dirs @ mumukit
 # TODO: Add expectations support
+# TODO: Add tests with multiple files
 
 directory=$(mktemp -d)
-cp $1 $directory/SubmissionTest.java
-javac -g:none -Xlint:none -Xdoclint:none -nowarn -cp "$CLASSPATH" "$directory/SubmissionTest.java" 2>&1
+for file in "$@"
+do
+    cp $file $directory
+done
+javac -g:none -Xlint:none -Xdoclint:none -nowarn -cp "$CLASSPATH" $directory/*.java 2>&1
 if [ $? -ne 0 ] ; then
   echo "!!TEST FINISHED WITH COMPILATION ERROR!!"
   exit 1
