@@ -25,7 +25,7 @@ gem install bundler
 This runner is dockerized, so you will need to install Docker first. Then:
 
 ```bash
-docker pull mumuki/mumuki-junit-worker:2.1
+./bin/pull_docker.sh
 ```
 
 ## Install Dependencies
