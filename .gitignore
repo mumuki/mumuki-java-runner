@@ -3,3 +3,4 @@
 hs_*.log
 Gemfile.lock
 bin/mulang
+bin/tmp/*

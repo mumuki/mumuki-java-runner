@@ -4,8 +4,9 @@ I18n.load_translations_path File.join(__dir__, 'locales', '*.yml')
 
 Mumukit.runner_name = 'java'
 Mumukit.configure do |config|
-  config.docker_image = 'mumuki/mumuki-junit-worker:2.0'
+  config.docker_image = 'mumuki/mumuki-junit-worker:2.1'
   config.content_type = 'markdown'
+  config.multifile = true
 end
 
 require_relative './version'
