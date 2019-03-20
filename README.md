@@ -44,7 +44,7 @@ RACK_ENV=development bundle exec rackup -p 4567
 
 Tests are standard [JUnit 4](https://junit.org/junit4/) tests, with a few following considerations:
 
-## Test slass
+## Test class
 
 You don't have to code the Test Class, but only the test methods instead. E.g.:
 
