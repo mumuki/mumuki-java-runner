@@ -141,6 +141,29 @@ JAVA
       it { expect(results).to eq [['testGetAChar', :failed, format('expected:<[bar]> but was:<[foo]>')]]}
     end
 
+    context 'when test fails and its names contains underscores' do
+      let(:content) do
+        <<JAVA
+class Foo {
+  public int getAnInt() {
+    return 2;
+  }
+}
+JAVA
+      end
+          let(:test) do
+        <<JAVA
+  @Test
+  public void test_get_an_int() {
+    Assert.assertEquals(3, new Foo().getAnInt());
+  }
+JAVA
+      end
+
+      it { expect(results).to eq [['test get an int', :failed, format('expected:<3> but was:<2>')]]}
+
+    end
+
     context 'when test passes' do
           let(:test) do
         <<JAVA

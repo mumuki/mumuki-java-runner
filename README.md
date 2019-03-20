@@ -40,5 +40,40 @@ bundle install
 RACK_ENV=development bundle exec rackup -p 4567
 ```
 
+# Test syntax
 
+Tests are standard [JUnit 4](https://junit.org/junit4/) tests, with a few following considerations:
 
+## Test class
+
+You don't have to code the Test Class, but only the test methods instead. E.g.:
+
+```java
+@Test
+public void testFoo() {
+  Assert.assertEquals(Foo.bar(), 2);
+}
+```
+
+## Imports
+
+The following packages are imported by default:
+
+* `java.util.*`
+* `java.util.function.*`
+* `java.util.stream.*`
+* `java.util.stream.Collectors.*`
+* `java.time.*`
+
+## Test naming convention
+
+There are no specific test naming conventions. However, using `snake_case` instead of `camelCase` is recommended, since underscores `_` will be converted into spaces in the test title. E.g.:
+
+```java
+@Test
+// WARNING:This test title will be reported as "test something interesting"
+// instead of just "test_something_interesting"
+public void test_something_interesting() {
+  Assert.assertEquals(Foo.bar(), 2);
+}
+```

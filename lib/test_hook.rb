@@ -17,7 +17,13 @@ class JavaTestHook < Mumukit::Templates::MultiFileHook
   end
 
   def transform(examples)
-    examples.map { |e| [e[0], e[1].to_sym, e[2].try {|result| Mumukit::ContentType::Markdown.code result}] }
+    examples.map do |e|
+      [transform_test_title(e[0]), e[1].to_sym, e[2].try {|result| Mumukit::ContentType::Markdown.code result}]
+    end
+  end
+
+  def transform_test_title(test_name)
+    test_name.gsub('_', ' ')
   end
 
   def post_process_file(file, result, status)
