@@ -55,10 +55,10 @@ describe JavaExpectationsHook do
     describe 'Uses' do
       let(:code) { '
         class Foo { public void m() {}};
-        class Bar { public void m() {this.g();}};' }
-      let(:foo_delegates) { {binding: 'Foo', inspection: 'Uses:*'} }
-      let(:foo_m_delegates) { {binding: 'Intransitive:Foo.m', inspection: 'Uses:*'} }
-      let(:bar_m_delegates) { {binding: 'Intransitive:Bar.m', inspection: 'Uses:*'} }
+        class Bar { public void m() {this.g();}  public void g() {return;} };' }
+      let(:foo_delegates) { {binding: 'Foo', inspection: 'Delegates'} }
+      let(:foo_m_delegates) { {binding: 'Intransitive:Foo.m', inspection: 'Delegates'} }
+      let(:bar_m_delegates) { {binding: 'Intransitive:Bar.m', inspection: 'Delegates'} }
       let(:expectations) { [foo_delegates, foo_m_delegates, bar_m_delegates, {binding: '*', inspection: 'Except:HasTooShortIdentifiers'}] }
 
       it { expect(result).to eq [{expectation: foo_delegates, result: false},
