@@ -133,9 +133,7 @@ class JavaFeedbackHook < Mumukit::Hook
       symbol_type, _ = parse_symbol symbol
       return '' if symbol_type == 'class'
 
-      ' ' + I18n.t(:at_location, {
-        location: localize_symbol(location)
-      })
+      ' ' + I18n.t(:at_location, location: localize_symbol(location))
     end
 
     def localize_symbol(symbol)
@@ -143,7 +141,7 @@ class JavaFeedbackHook < Mumukit::Hook
       i18n_key = "symbol_#{symbol_type}"
       return "`#{symbol}`" unless I18n.exists? i18n_key
 
-      I18n.t(i18n_key, { name: name }) + localize_of_type(type)
+      I18n.t(i18n_key, name: name) + localize_of_type(type)
     end
 
     def localize_of_type(type)
